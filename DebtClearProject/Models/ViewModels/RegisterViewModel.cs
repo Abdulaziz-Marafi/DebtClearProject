@@ -4,6 +4,17 @@ namespace DebtClearProject.Models.ViewModels
 {
     public class RegisterViewModel
     {
+        [Display(Name = "First Name")]
+        [Required(ErrorMessage = "First Name is Required.")]
+        [MinLength(2, ErrorMessage = "First Name must be at least 2 characters long.")]
+        public string FirstName { get; set; }
+
+        [Display(Name = "First Name")]
+        [Required(ErrorMessage = "First Name is Required.")]
+        [MinLength(2, ErrorMessage = "First Name must be at least 2 characters long.")]
+        public string LastName { get; set; }
+
+
         [Display(Name = "Email Address")]
         [Required(ErrorMessage = "Email is Required.")]
         [EmailAddress(ErrorMessage = "Please enter a valid Email Address.")]
@@ -31,6 +42,11 @@ namespace DebtClearProject.Models.ViewModels
         [DataType(DataType.Password)]
         [Compare("Password", ErrorMessage = "Password and Confirm Password do not match")]
         public string ConfirmPassword { get; set; }
+
+        public decimal Balance { get; set; }
+
+        public IFormFile? Image { get; set; }
+
 
 
     }
