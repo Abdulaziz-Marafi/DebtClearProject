@@ -9,9 +9,9 @@ namespace DebtClearProject.Models.ViewModels
         [MinLength(2, ErrorMessage = "First Name must be at least 2 characters long.")]
         public string FirstName { get; set; }
 
-        [Display(Name = "First Name")]
-        [Required(ErrorMessage = "First Name is Required.")]
-        [MinLength(2, ErrorMessage = "First Name must be at least 2 characters long.")]
+        [Display(Name = "Last Name")]
+        [Required(ErrorMessage = "Last Name is Required.")]
+        [MinLength(2, ErrorMessage = "Last Name must be at least 2 characters long.")]
         public string LastName { get; set; }
 
 
