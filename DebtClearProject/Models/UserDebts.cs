@@ -5,15 +5,15 @@ namespace DebtClearProject.Models
     public class UserDebts
     {
         public Guid UserDebtsId { get; set; }
-        public string Split { get; set; }
-        public decimal TotalAmount { get; set; }
+        public decimal Split { get; set; }
+        //public decimal TotalAmount { get; set; }
 
         public bool IsPaid { get; set; }
 
         public bool IsAccepted { get; set; }
 
         // Remaining debt to be paid by the user
-        public bool RemainingDebt { get; set; }
+        public decimal RemainingDebt { get; set; }
 
         //FK 1 Users
         [ForeignKey("User")]

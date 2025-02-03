@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace DebtClearProject.Models.ViewModels
 {
@@ -13,6 +13,7 @@ namespace DebtClearProject.Models.ViewModels
         [Required(ErrorMessage = "Last Name is Required.")]
         [MinLength(2, ErrorMessage = "Last Name must be at least 2 characters long.")]
         public string LastName { get; set; }
+      
         [Display(Name = "Email Address")]
         [Required(ErrorMessage = "Email is Required.")]
         [EmailAddress(ErrorMessage = "Please enter a valid Email Address.")]
@@ -40,6 +41,11 @@ namespace DebtClearProject.Models.ViewModels
         [DataType(DataType.Password)]
         [Compare("Password", ErrorMessage = "Password and Confirm Password do not match")]
         public string ConfirmPassword { get; set; }
+        public decimal Balance { get; set; }
+
+        public IFormFile? Image { get; set; }
+
+
         public decimal Balance { get; set; }
 
         public IFormFile? Image { get; set; }
