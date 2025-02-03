@@ -1,4 +1,5 @@
-﻿using DebtClearProject.Models;
+﻿using DebtClearProject.Data;
+using DebtClearProject.Models;
 using DebtClearProject.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -14,14 +15,16 @@ namespace DebtClearProject.Controllers
         private SignInManager<User> signInManager;
         private RoleManager<IdentityRole> roleManager;
         private readonly IWebHostEnvironment webHostEnvironment;
+        private ApplicationDbContext db;
 
-        public AccountController(UserManager<User> _userManager, SignInManager<User> _signInManager, RoleManager<IdentityRole> _roleManager,
-            IWebHostEnvironment _webHostEnvironment)
+        public AccountController(UserManager<User> _userManager, SignInManager<User> _signInManager, RoleManager<IdentityRole> _roleManager, IWebHostEnvironment _webHostEnvironment, ApplicationDbContext _db)
+
         {
             userManager = _userManager;
             signInManager = _signInManager;
             roleManager = _roleManager;
             webHostEnvironment = _webHostEnvironment;
+            db = _db;
         }
         #endregion
 
