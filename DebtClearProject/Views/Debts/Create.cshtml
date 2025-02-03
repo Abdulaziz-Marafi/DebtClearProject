@@ -1,0 +1,82 @@
+﻿@model DebtViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Debt</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" asp-asp-controller="Debts" method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="TotalAmount" class="control-label"></label>
+                <input asp-for="TotalAmount" class="form-control" />
+                <span asp-validation-for="TotalAmount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Ratios[0]" class="control-label">Your Ratio</label>
+                <input asp-for="Ratios[0]" class="form-control" id="ratio0" />
+                <span asp-validation-for="Ratios[0]" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SelectedEmailUser" class="control-label">Other User Email</label>
+                <input asp-for="SelectedEmailUser" class="form-control" />
+                <span asp-validation-for="SelectedEmailUser" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Ratios[1]" class="control-label">Other User Ratio</label>
+                <input asp-for="Ratios[1]" class="form-control" id="ratio1" />
+                <span asp-validation-for="Ratios[1]" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StartDate" class="control-label"></label>
+                <input asp-for="StartDate" class="form-control" />
+                <span asp-validation-for="StartDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EndDate" class="control-label"></label>
+                <input asp-for="EndDate" class="form-control" />
+                <span asp-validation-for="EndDate" class="text-danger"></span>
+            </div>
+@*             <div class="form-group">
+                <label asp-for="Status" class="control-label"></label>
+                <select asp-for="Status" class="form-control">
+                    <option value="Pending">Pending</option>
+                    <option value="Approved">Approved</option>
+                    <option value="Rejected">Rejected</option>
+                </select>
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div> *@
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    <script>
+        document.getElementById('ratio0').addEventListener('input', function() {
+            var ratio0 = parseFloat(this.value) || 0;
+            var ratio1 = 100 - ratio0;
+            document.getElementById('ratio1').value = ratio1.toFixed(2);
+        });
+
+        document.getElementById('ratio1').addEventListener('input', function() {
+            var ratio1 = parseFloat(this.value) || 0;
+            var ratio0 = 100 - ratio1;
+            document.getElementById('ratio0').value = ratio0.toFixed(2);
+        });
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
