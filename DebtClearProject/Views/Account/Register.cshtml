@@ -5,14 +5,14 @@
 
 <h1>Register</h1>
 
-<form asp-action="Register" asp-controller="Employees" method="post">
+<form asp-action="Register" asp-controller="Account" method="post">
     <div asp-validation-summary="All" class="text-warning">
     </div>
     <table class="table table-bordered">
         <tr>
             <td><label asp-for="FirstName"></label></td>
             <td>
-                <input asp-for="FirstName" placeholder="enter the product Name" class="form-control" />
+                <input asp-for="FirstName" placeholder="First Name" class="form-control" />
                 <span class="text-danger" asp-validation-for="FirstName"></span>
             </td>
         </tr>
@@ -20,27 +20,34 @@
         <tr>
             <td><label asp-for="LastName"></label></td>
             <td>
-                <input asp-for="LastName" placeholder="enter the product Price" class="form-control" />
+                <input asp-for="LastName" placeholder="Last Name" class="form-control" />
                 <span class="text-danger" asp-validation-for="LastName"></span>
             </td>
         </tr>
         <tr>
             <td><label asp-for="Email"></label></td>
             <td>
-                <input asp-for="Email" placeholder="enter the product Price" class="form-control" />
+                <input asp-for="Email" placeholder="Enter Email" class="form-control" />
                 <span class="text-danger" asp-validation-for="Email"></span>
+            </td>
+        <tr>
+        <tr>
+            <td><label asp-for="ConfirmEmail"></label></td>
+            <td>
+                <input asp-for="ConfirmEmail" placeholder="Enter Confirm Email" class="form-control" />
+                <span class="text-danger" asp-validation-for="ConfirmEmail"></span>
             </td>
         <tr>
             <td><label asp-for="Password"></label></td>
             <td>
-                <input asp-for="Password" placeholder="enter the product Price" class="form-control" />
+                <input asp-for="Password" placeholder="Password" class="form-control" />
                 <span class="text-danger" asp-validation-for="Password"></span>
             </td>
         </tr>
         <tr>
             <td><label asp-for="ConfirmPassword"></label></td>
             <td>
-                <input asp-for="ConfirmPassword" placeholder="enter the product Price" class="form-control" />
+                <input asp-for="ConfirmPassword" placeholder="Confirm Password" class="form-control" />
                 <span class="text-danger" asp-validation-for="ConfirmPassword"></span>
             </td>
         </tr>

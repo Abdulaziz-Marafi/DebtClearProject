@@ -54,7 +54,7 @@ namespace DebtClearProject.Controllers
                     LastName = model.LastName,
                     Email = model.Email,
                     UserName = model.Email,
-                    Balance = model.Balance,
+                    Balance = 10000,
                     ProfilePicture = uniqueFile
                 };
 
