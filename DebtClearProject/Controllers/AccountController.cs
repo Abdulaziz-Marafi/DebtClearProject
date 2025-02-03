@@ -13,11 +13,15 @@ namespace DebtClearProject.Controllers
         private UserManager<User> userManager;
         private SignInManager<User> signInManager;
         private RoleManager<IdentityRole> roleManager;
-        public AccountController(UserManager<User> _userManager, SignInManager<User> _signInManager, RoleManager<IdentityRole> _roleManager)
+        private readonly IWebHostEnvironment webHostEnvironment;
+
+        public AccountController(UserManager<User> _userManager, SignInManager<User> _signInManager, RoleManager<IdentityRole> _roleManager,
+            IWebHostEnvironment _webHostEnvironment)
         {
             userManager = _userManager;
             signInManager = _signInManager;
             roleManager = _roleManager;
+            webHostEnvironment = _webHostEnvironment;
         }
         #endregion
 
@@ -101,7 +105,7 @@ namespace DebtClearProject.Controllers
             await signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
-        #endregion
+        #endregion.
 
         public string UploadFile(IFormFile Image)
         {

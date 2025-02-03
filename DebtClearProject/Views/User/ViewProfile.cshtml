@@ -1,0 +1,22 @@
+﻿@model ViewProfileViewModel
+@{
+    ViewData["Title"] = "ViewProfile";
+}
+
+<h1>ViewProfile</h1>
+<h5>@Context.Session.GetString("Name")</h5>
+
+<h1 class="text text-center">Your profile</h1>
+
+<table class="table table-bordered text text-center">
+    <tr>
+        <td>@Html.DisplayNameFor(x => x.Name)</td>
+       
+    </tr>
+    <tr>
+        <td>
+            @Context.Session.GetString("Name")
+        </td>
+       
+    </tr>
+</table>
