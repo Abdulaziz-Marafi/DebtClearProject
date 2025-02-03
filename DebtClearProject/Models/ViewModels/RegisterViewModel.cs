@@ -46,11 +46,5 @@ namespace DebtClearProject.Models.ViewModels
         public IFormFile? Image { get; set; }
 
 
-        public decimal Balance { get; set; }
-
-        public IFormFile? Image { get; set; }
-
-
-
     }
 }

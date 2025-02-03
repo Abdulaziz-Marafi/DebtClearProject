@@ -18,6 +18,7 @@ namespace DebtClearProject.Controllers
         private ApplicationDbContext db;
 
         public AccountController(UserManager<User> _userManager, SignInManager<User> _signInManager, RoleManager<IdentityRole> _roleManager, IWebHostEnvironment _webHostEnvironment, ApplicationDbContext _db)
+
         {
             userManager = _userManager;
             signInManager = _signInManager;
@@ -53,7 +54,7 @@ namespace DebtClearProject.Controllers
                     LastName = model.LastName,
                     Email = model.Email,
                     UserName = model.Email,
-                    Balance = model.Balance,
+                    Balance = 10000,
                     ProfilePicture = uniqueFile
                 };
 
@@ -107,7 +108,7 @@ namespace DebtClearProject.Controllers
             await signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
-        #endregion
+        #endregion.
 
         public string UploadFile(IFormFile Image)
         {

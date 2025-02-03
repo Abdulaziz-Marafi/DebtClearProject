@@ -42,11 +42,12 @@ namespace DebtClearProject.Controllers
         {
             if (ModelState.IsValid)
             {
-              var debt = new Debt
+                string debtSplit = (newDebt.Ratios[0]).ToString() + " : "+(newDebt.Ratios[1]).ToString();
+                var debt = new Debt
               {
                   //DebtId = Guid.NewGuid(),
                   TotalAmount = newDebt.TotalAmount,
-                  //DebtSplit = newDebt.DebtSplit,
+                  DebtSplit = debtSplit,
                   StartDate = newDebt.StartDate,
                   EndDate = newDebt.EndDate,
                   Status = Debt.DebtStatus.Pending
@@ -67,18 +68,18 @@ namespace DebtClearProject.Controllers
                 {
                     new UserDebts{
                     //UserDebtsId = Guid.NewGuid(),
-                    Split = newDebt.Ratios[0] * newDebt.TotalAmount,
+                    Split = (newDebt.Ratios[0])/100,
                     IsPaid = false,
                     IsAccepted = false,
-                    RemainingDebt = newDebt.Ratios[0] * newDebt.TotalAmount,
+                    RemainingDebt = (newDebt.Ratios[0] * newDebt.TotalAmount)/100,
                     UserId = curr.Id,
                     DebtId = debt.DebtId},
 
                     new UserDebts{
-                    Split = newDebt.Ratios[1] * newDebt.TotalAmount,
+                    Split = (newDebt.Ratios[1])/100,
                     IsPaid = false,
                     IsAccepted = false,
-                    RemainingDebt = newDebt.Ratios[1] * newDebt.TotalAmount,
+                    RemainingDebt = (newDebt.Ratios[1] * newDebt.TotalAmount)/100,
                     UserId = selectedUser.Id,
                     DebtId = debt.DebtId}
                     
