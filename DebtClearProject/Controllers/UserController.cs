@@ -42,9 +42,9 @@ namespace DebtClearProject.Controllers
             {
                 Balance = r.Balance,
                 Email = r.Email,
-                FName = r.FName,
-                LName = r.LName,
-                Img = r.Img,
+                FName = r.FirstName,
+                LName = r.LastName,
+                Img = r.ProfilePicture,
                 Id = r.Id
             };
             return View(model);
@@ -61,14 +61,14 @@ namespace DebtClearProject.Controllers
                     return NotFound();
                 }
 
-                user.FName = model.FName;
-                user.LName = model.LName;
+                user.FirstName = model.FName;
+                user.LastName = model.LName;
                 user.Email = model.Email;
 
                 if (model.NewImg != null)
                 {
                     string uniqueFile = UploadFile(model.NewImg);
-                    user.Img = uniqueFile;
+                    user.ProfilePicture = uniqueFile;
                 }
                 var result = await userManager.UpdateAsync(user);
                 if (result.Succeeded)

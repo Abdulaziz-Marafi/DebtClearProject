@@ -1,0 +1,57 @@
+﻿@model PayDebtViewModel
+@{
+    ViewData["Title"] = "DebtPayment";
+}
+
+<h1>Pay off Debt</h1>
+
+@if(Model.RemainingDebt !=0){
+<form method="post" asp-action="DebtPayment" asp-controller="Debts">
+    <div asp-validation-summary="All" class="text-warning">
+    </div>
+    <table class="table table-bordered">
+        <tr>
+            <td>
+			@Html.DisplayNameFor(x => x.RemainingDebt)
+            </td>
+            <td>
+                @Model.RemainingDebt
+            </td>
+        </tr>
+        <tr>
+            <td><label asp-for="Amount"></label></td>
+            <td>
+                    <input asp-for="Amount" placeholder="Enter Amount" class="form-control" min="0" max="@Model.RemainingDebt" />
+                <span class="text-danger" asp-validation-for="Amount"></span>
+            </td>
+        </tr>
+        <input type="hidden" asp-for="UserDebtId" />
+		<tr>
+			<td>
+				<button type="submit" class="btn btn-primary">Pay</button>
+			</td>
+</form>
+}else {
+    <p><span class="alert alert-success"> Your portion of the debt is already paid for.</span></p>
+}
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var amountInput = document.querySelector('input[name="Amount"]');
+            var maxAmount = parseFloat(amountInput.getAttribute('max'));
+
+            amountInput.addEventListener('input', function () {
+                var value = parseFloat(this.value);
+                if (value < 0) {
+                    this.value = 0;
+                } else if (value > maxAmount) {
+                    this.value = maxAmount;
+                }
+            });
+        });
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+

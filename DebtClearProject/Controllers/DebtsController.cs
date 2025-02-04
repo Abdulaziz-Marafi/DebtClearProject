@@ -64,13 +64,18 @@ namespace DebtClearProject.Controllers
                     ModelState.AddModelError("SelectedEmailUser", "User not found");
                     return View(newDebt);
                 }
+                if(curr.Id == selectedUser.Id)
+                {
+                    ModelState.AddModelError("SelectedEmailUser", "You cannot owe yourself");
+                    return View(newDebt);
+                }
                 var userDebts = new[]
                 {
                     new UserDebts{
                     //UserDebtsId = Guid.NewGuid(),
                     Split = (newDebt.Ratios[0])/100,
                     IsPaid = false,
-                    IsAccepted = false,
+                    Status = UserDebts.DebtStatus.Approved,
                     RemainingDebt = (newDebt.Ratios[0] * newDebt.TotalAmount)/100,
                     UserId = curr.Id,
                     DebtId = debt.DebtId},
@@ -78,7 +83,7 @@ namespace DebtClearProject.Controllers
                     new UserDebts{
                     Split = (newDebt.Ratios[1])/100,
                     IsPaid = false,
-                    IsAccepted = false,
+                    Status = UserDebts.DebtStatus.Pending,
                     RemainingDebt = (newDebt.Ratios[1] * newDebt.TotalAmount)/100,
                     UserId = selectedUser.Id,
                     DebtId = debt.DebtId}
@@ -115,6 +120,136 @@ namespace DebtClearProject.Controllers
         {
             var debts = db.Debts.ToList();
             return View(debts);
+        }
+
+        public async Task<IActionResult> Index2()
+        {
+            var curr = await userManager.GetUserAsync(User);
+            var debts = db.UserDebts.Where(x=> x.UserId==curr.Id).ToList();
+            return View(debts);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DebtPayment(Guid id)
+        {
+            var curr = await userManager.GetUserAsync(User);
+
+            var userDebt = db.UserDebts.Where(x => x.UserDebtsId == id).FirstOrDefault();
+            // Add ViewModel
+            PayDebtViewModel debt = new PayDebtViewModel()
+            {
+                UserDebtId = userDebt.UserDebtsId,
+                RemainingDebt = userDebt.RemainingDebt,
+                Amount = 0.1m
+            };
+            return View(debt);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DebtPayment(PayDebtViewModel debt)
+        {
+            // Add ViewModel
+            if (ModelState.IsValid)
+            {
+                var curr = await userManager.GetUserAsync(User);
+                if (curr == null)
+                {
+                    return NotFound();
+                }
+                var userDebt = db.UserDebts.Where(x => x.UserDebtsId == debt.UserDebtId).FirstOrDefault();
+                if (userDebt == null)
+                {
+                    return NotFound();
+                }
+                // If user wants to pay more than the balance they currently have
+                if (debt.Amount > curr.Balance)
+                {
+                    ModelState.AddModelError("Amount", "Amount is greater than balance");
+                    Transaction tran = new Transaction()
+                    {
+                        Amount = debt.Amount,
+                        TransactionDate = DateTime.Now,
+                        Status = Transaction.TransactionStatus.Failed,
+                        RemainingBalance = curr.Balance,
+                        UserId = curr.Id,
+                        DebtId = userDebt.DebtId
+
+                    };
+                    db.Transactions.Add(tran);
+                    db.SaveChanges();
+                    return View(debt);
+                }
+                // If user wants to pay more than the remaining debt
+                if (debt.Amount > userDebt.RemainingDebt && curr.Balance > debt.Amount)
+                {
+                    curr.Balance -= userDebt.RemainingDebt;
+                   
+                    Transaction tran = new Transaction()
+                    {
+                        Amount = userDebt.RemainingDebt,
+                        TransactionDate = DateTime.Now,
+                        Status = Transaction.TransactionStatus.Success,
+                        RemainingBalance = curr.Balance,
+                        UserId = curr.Id,
+                        DebtId = userDebt.DebtId
+
+                    };
+                    userDebt.RemainingDebt = 0;
+                    userDebt.IsPaid = true;
+                    db.Transactions.Add(tran);
+                    db.SaveChanges();
+                }
+                else
+                {
+                    userDebt.RemainingDebt -= debt.Amount;
+                    curr.Balance -= debt.Amount;
+
+                    Transaction tran = new Transaction()
+                    {
+                        Amount = debt.Amount,
+                        TransactionDate = DateTime.Now,
+                        Status = Transaction.TransactionStatus.Success,
+                        RemainingBalance = curr.Balance,
+                        UserId = curr.Id,
+                        DebtId = userDebt.DebtId
+
+                    };
+                    db.Transactions.Add(tran);
+                    // If no remaining debt then its paid off
+                    if(userDebt.RemainingDebt == 0)
+                    {
+                        userDebt.IsPaid = true;
+                    }
+                    db.SaveChanges();
+                    return RedirectToAction(nameof(Index2));
+                }
+            }
+            return View(debt);
+        }
+
+        public async Task<IActionResult> ApproveDebt(Guid? id)
+        {
+            var curr = await userManager.GetUserAsync(User);
+            var userDebt = db.UserDebts.Where(x => x.UserDebtsId == id).FirstOrDefault();
+            if (userDebt == null)
+            {
+                return NotFound();
+            }
+            userDebt.Status = UserDebts.DebtStatus.Approved;
+            db.SaveChanges();
+            return RedirectToAction(nameof(Index2));
+        }
+        public async Task<IActionResult> RejecrDebt(Guid? id)
+        {
+            var curr = await userManager.GetUserAsync(User);
+            var userDebt = db.UserDebts.Where(x => x.UserDebtsId == id).FirstOrDefault();
+            if (userDebt == null)
+            {
+                return NotFound();
+            }
+            userDebt.Status = UserDebts.DebtStatus.Rejected;
+            db.SaveChanges();
+            return RedirectToAction(nameof(Index2));
         }
 
     }
