@@ -1,5 +1,4 @@
-﻿@model IEnumerable<UserDebts>
-@{
+﻿@model DebtUserDebtsViewModel
     ViewData["Title"] = "Index2";
 }
 
@@ -18,10 +17,10 @@
                     <table class="table mb-0">
                         <thead class="small text-uppercase bg-body text-muted">
                             <tr>
-                                <th>@Html.DisplayNameFor(x=>x.Debt!.DebtId)</th>
+                                <th>@Html.DisplayNameFor(model => model.Debts.FirstOrDefault()!.DebtId))</th>
                                 @* <th>Add date later</th> *@
-                                <th>@Html.DisplayNameFor(x=>x.Split)</th>
-                                <th>@Html.DisplayNameFor(x=>x.RemainingDebt)</th>
+                                <th>@Html.DisplayNameFor(model => model.UserDebts.FirstOrDefault()!.Split)</th>
+                                <th>@Html.DisplayNameFor(model => model.UserDebts.FirstOrDefault()!.RemainingDebt)</th>
                                 <th>Status</th>
                                 <th>Operations</th>
                             </tr>
@@ -36,8 +35,7 @@
                                     <td>@userDebt.Split.ToString()</td> 								
                                     <td>
                                         <div class="d-flex align-items-center">
-                                            @* 											<span><i class="fa fa-arrow-up" aria-hidden="true"></i></span>
- *@											<span>@userDebt.RemainingDebt</span>
+                                            @*<span><i class="fa fa-arrow-up" aria-hidden="true"></i></span>*@											<span>@userDebt.RemainingDebt</span>
                                         </div>
                                     </td>
                                     @if(userDebt.IsPaid){

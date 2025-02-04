@@ -125,7 +125,13 @@ namespace DebtClearProject.Controllers
         public async Task<IActionResult> Index2()
         {
             var curr = await userManager.GetUserAsync(User);
-            var debts = db.UserDebts.Where(x=> x.UserId==curr.Id).ToList();
+            var userdebts = db.UserDebts.Where(x=> x.UserId==curr.Id).ToList();
+            var debts = db.Debts.Where(x=> x.DebtId == userdebts.Select(x => x.DebtId).FirstOrDefault()).ToList();
+            DebtUserDebtsViewModel userDebtsData = new DebtUserDebtsViewModel()
+            {
+                Debts = debts,
+                UserDebts = userdebts
+            };
             return View(debts);
         }
 
