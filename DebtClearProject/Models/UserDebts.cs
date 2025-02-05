@@ -10,7 +10,9 @@ namespace DebtClearProject.Models
 
         public bool IsPaid { get; set; }
 
-        public bool IsAccepted { get; set; }
+        //public bool IsAccepted { get; set; }
+
+        public DebtStatus Status { get; set; }
 
         // Remaining debt to be paid by the user
         public decimal RemainingDebt { get; set; }
@@ -24,5 +26,12 @@ namespace DebtClearProject.Models
         [ForeignKey("Debt")]
         public Guid DebtId { get; set; }
         public Debt? Debt { get; set; }
+
+        public enum DebtStatus
+        {
+            Approved,
+            Pending,
+            Rejected
+        }
     }
 }
