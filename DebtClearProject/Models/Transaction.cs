@@ -21,7 +21,7 @@ namespace DebtClearProject.Models
 
         // Foreign Key 2
         [ForeignKey("DebtId")]
-        public string DebtId { get; set; }
+        public Guid DebtId { get; set; }
         public Debt? Debt { get; set; }
 
         public enum TransactionStatus

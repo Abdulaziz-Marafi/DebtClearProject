@@ -2,31 +2,31 @@
 
 namespace DebtClearProject.Models.ViewModels
 {
-    public class EditViewModel
+    public class DisplayUserViewModel
     {
 
+        [Required(ErrorMessage = "Please Enter Your First Name")]
         [Display(Name = "First Name")]
-        [Required(ErrorMessage = "First Name is Required.")]
-        [MinLength(2, ErrorMessage = "First Name must be at least 2 characters long.")]
-        public string FName { get; set; }
+        [MinLength(2, ErrorMessage = "Your First Name Must Be At Least 2 Charachters Long")]
+        public string FirstName { get; set; }
 
         [Display(Name = "Last Name")]
-        [Required(ErrorMessage = "Last Name is Required.")]
-        [MinLength(2, ErrorMessage = "Last Name must be at least 2 characters long.")]
-        public string LName { get; set; }
-
+        [Required(ErrorMessage = "Please Enter Your Last Name")]
+        [MinLength(2, ErrorMessage = "Your Last Name Must Be At Least 2 Charachters Long")]
+        public string LastName { get; set; }
 
         [Display(Name = "Email Address")]
         [Required(ErrorMessage = "Email is Required.")]
         [EmailAddress(ErrorMessage = "Please enter a valid Email Address.")]
         [MinLength(6, ErrorMessage = "Email Address must be at least 6 characters long.")]
-        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
+        [Required]
         public decimal Balance { get; set; }
 
-        public IFormFile? NewImg { get; set; }
         public string? Img { get; set; }
-        //public string Id { get; internal set; }
+
+        //[Required]
+        //public string Id { get; set; }
     }
 }

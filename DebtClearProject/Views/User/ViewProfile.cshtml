@@ -1,21 +1,21 @@
-﻿@model ViewProfileViewModel
+﻿@model DisplayUserViewModel
 @{
     ViewData["Title"] = "ViewProfile";
 }
 
-<h1>ViewProfile</h1>
 
-              
-@* <div class="text-center">
-    <h1 class="display-4">Welcome, @Model.FName @Model.LName.</h1>
+<h1>ViewProfile</h1>
+            
+@* @* <div class="text-center">
+    <h1 class="display-4">Welcome, @Model.FirstName @Model.LastName.</h1>
     <div class="card" style="width: 18rem;">
         <img class=" img-thumbnail card-img-top" src="~/Images/@Model.Img" alt="Card image cap">
         <div class="card-body">
-            <h5 class="card-title">@Model.FName @Model.LName</h5>
-            <p class="card-text">@Html.DisplayNameFor(x => x.Id): @Model.Id</p>
+            <h5 class="card-title">@Model.FirstName @Model.LastName</h5>
+            @* <p class="card-text">@Html.DisplayNameFor(x => x.Id): @Model.Id</p> 
         </div>
         <ul class="list-group list-group-flush">
-            <li class="list-group-item">@Html.DisplayNameFor(x => x.Balance): @Model.Balance</li>
+            <li class="list-group-item">@Html.DisplayNameFor(x => x.Balance): @Model.Balance$</li>
             <li class="list-group-item">@Html.DisplayNameFor(x => x.Email): @Model.Email </li>
         </ul>
     </div>
@@ -31,11 +31,10 @@
             </div><!-- / project-info-box -->
 
             <div class="project-info-box">
-                <p><b> First Name:</b> @Model.FName</p>
-                <p><b>Last Name:</b> @Model.LName</p>
+                <p><b> First Name:</b> @Model.FirstName</p>
+                <p><b>Last Name:</b> @Model.LastName</p>
                 <p><b>Email:</b> @Model.Email</p>
                 <p><b>Balance:</b> @Model.Balance</p>
-                <p><b>Id:</b> @Model.Id</p>
                 
             </div><!-- / project-info-box -->
 
