@@ -23,8 +23,12 @@ namespace DebtClearProject.Controllers
         [HttpGet]
         public async Task<IActionResult> ViewProfile()
         {
-
+            // ADD view Model
             var r = await userManager.GetUserAsync(User);
+            if (r == null)
+            {
+                return NotFound();
+            }
             DisplayUserViewModel model = new DisplayUserViewModel()
             {
                 Balance = r.Balance,
@@ -33,9 +37,9 @@ namespace DebtClearProject.Controllers
                 LastName = r.LastName,
                 Img = r.ProfilePicture
             };
-
             return View(model);
         }
+        
         [HttpGet]
         public async Task<IActionResult> UpdateProfile()
         {

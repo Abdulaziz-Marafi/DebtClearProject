@@ -1,49 +1,113 @@
-﻿@model LoginViewModel
+﻿@* @model LoginViewModel
+@{
+	ViewData["Title"] = "Login";
+	Layout = null;
+}
+<link href="~/css/stylesheet.css" rel="stylesheet" /> *@
+@* <div>
+	<h1>Login</h1>
+
+	<form asp-action="Login" asp-controller="Account" method="post" class="col-4 j">
+		<div asp-validation-summary="All" class="text-danger"></div>
+		<table class="table table-bordered">
+			<tr>
+				<td><label asp-for="Email"></label></td>
+				<td>
+					<input asp-for="Email" placeholder="Enter Email*" class="form-control" />
+					<span class="text-danger" asp-validation-for="Email"></span>
+				</td>
+			</tr>
+
+
+			<tr>
+				<td><label asp-for="Password"></label></td>
+				<td>
+					<input asp-for="Password" placeholder="Enter Password*" class="form-control" />
+					<span class="text-danger" asp-validation-for="Password"></span>
+
+				</td>
+			</tr>
+
+			<tr>
+				<td><label asp-for="RememberMe"></label></td>
+				<td>
+					<input asp-for="RememberMe" class=" form-check-input trzt" />
+				</td>
+
+			</tr>
+
+
+
+			<tr>
+				<td colspan="2">
+					<input type="submit" class="btn btn-success" value="Login" />
+
+				</td>
+
+			</tr>
+		</table>
+
+	</form>
+</div>  *@
+
+@* 
+<div class="box">
+	<span class="borderLine"></span>
+	<form asp-action="Login" asp-controller="Account" method="post">
+		<h2> <span style="color:grey;">Login</span> </h2>
+		<div class="inputBox">
+			<input asp-for="Email" required>
+			<span>Email</span>
+			<i></i>
+		</div>
+		<div class="inputBox">
+			<input asp-for="Password" required>
+			<span>Password</span>
+			<i></i>
+		</div>
+		<br />
+		<div class="links">
+			<div>
+				<input asp-for="RememberMe" class="form-check-input" />
+				<a class="text-body" style="color:grey;">Remember Me</a>
+			</div>
+			<a asp-action="Register" asp-controller="Account" style="color:grey;">Register</a>
+		</div>
+		<input type="submit" id="submit" value="Login">
+	</form>
+</div> *@
+
+			@model LoginViewModel
 @{
     ViewData["Title"] = "Login";
+    Layout = null;
 }
 
-<h1>Login</h1>
-
-<form asp-action="Login" asp-controller="Account" method="post">
-	<div asp-validation-summary="All" class="text-danger"></div>
-	<table class="table table-bordered">
-
-		<tr>
-			<td><label asp-for="Email"></label></td>
-			<td>
-				<input asp-for="Email" placeholder="Enter Email*" class="form-control" />
-				<span class="text-danger" asp-validation-for="Email"></span>
-			</td>
-		</tr>
-
-
-		<tr>
-			<td><label asp-for="Password"></label></td>
-			<td>
-				<input asp-for="Password" placeholder="Enter Password*" class="form-control" />
-				<span class="text-danger" asp-validation-for="Password"></span>
-
-			</td>
-		</tr>
-
-		<tr>
-			<td><label asp-for="RememberMe"></label></td>
-			<td>
-				<input asp-for="RememberMe" class="form-check-input" />
-			</td>
-
-		</tr>
-
-
-
-		<tr>
-			<td colspan="2">
-				<input type="submit" class="btn btn-success" value="Login" />
-
-			</td>
-
-		</tr>
-	</table>
-
-</form>
+<link href="~/css/style2.css" rel="stylesheet" />
+<div class="background"></div>
+<div class="box">
+    <h2>Login</h2>
+    <form method="post" asp-action="Login" asp-controller="Account">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="inputBox">
+            <input type="text" asp-for="Email">
+            <label asp-for="Email" class="white-label">Email</label>
+            <span asp-validation-for="Email"></span>
+        </div>
+        <div class="inputBox">
+            <input type="password" asp-for="Password">
+            <label asp-for="Password" class="white-label">Password</label>
+            <span asp-validation-for="Password"></span>
+        </div>
+        <div class="form-check form-switch">
+            <input asp-for="RememberMe" class="form-check-input btn-lg" type="checkbox">
+            <label class="form-check-label white-text">Remember me</label>
+        </div>
+        <input class="margin-top" type="submit" value="Login">
+        <div class="text-center text-white center-text">
+            <p>
+                Don't have an account? <a asp-action="Register" asp-controller="Account" class="gray-underline fw-bold text-body">Register</a>
+            </p>
+        </div>
+    </form>
+</div>

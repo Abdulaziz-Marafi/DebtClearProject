@@ -1,64 +1,149 @@
-﻿@inject SignInManager<User> signInManager
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - DebtClearProject</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/DebtClearProject.styles.css" asp-append-version="true" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="icon" href="~/images/favicon.png" type="image/x-icon" />
+    <!-- Theme tittle -->
+    <title>Alons | Perfect Business Consulting Html Template</title>
+
+    <!-- Theme style CSS -->
+    <link href="~/css/style.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="~/https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="~/https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">DebtClearProject</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+
+    <!-- Header Top Area -->
+    <div class="header_top_area">
+        <div class="container">
+            <div class="header_top_inner row m-0">
+                <ul class="top_menu col-lg-6 col-md-7 p-0">
+                    <li><a href="~/#">Career</a></li>
+                    <li><a href="~/#">Iobs</a></li>
+                    <li><a href="~/#">Support</a></li>
+                </ul>
+                <div class="right_menu col-lg-6 col-md-5 p-0">
+                    <ul class="right_nav">
+						<li><a asp-action="Register" asp-controller="Account" class="customA">Register</a></li>
+						<li><a asp-action="Login" asp-controller="Account" class="customA">Login</a></li>
+                        @* <li><a href="~/#"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="~/#"><i class="fa fa-google-plus"></i></a></li>
+                        <li><a href="~/#"><i class="fa fa-vine"></i></a></li> *@
+
+                        
+                        @* <li class="dropdown search_dropbown">
+                            <a class="nav-link dropdown-toggle" href="~/" role="button" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-search"></i></a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <input type="text" placeholder="Search..">
+                                    <span><i class="fa fa-search"></i></span>
+                                </li>
+                            </ul>
+                        </li> *@
                     </ul>
                 </div>
             </div>
-            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-end">
-                <ul class="navbar-nav flex-grow-1 justify-content-lg-end">
-
-                    @if (signInManager.IsSignedIn(User))
-                    {
-                        <li class="nav-item">
-                            <form asp-action="Logout" asp-controller="Account" method="post">
-                                <input type="submit" class="btn btn-link" value="Logout @User.Identity!.Name" />
-                            </form>
-                        </li>
-                    }
-                </ul>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+        </div>
     </div>
-
-    <footer class="border-top footer text-muted">
+    <!-- Header Top Area -->
+    <!-- Achieve your financial -->
+    <section class="achieve_financial_area">
         <div class="container">
-            &copy; 2025 - DebtClearProject - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            @RenderBody()
+            @RenderSection("Scripts", required: false)
+        </div>
+    </section>
+    <!-- Achieve your financial -->
+    <!-- Footer Area -->
+    <footer class="footer_area">
+        <div class="container">
+            <div class="footer_inner row">
+                <div class="col-xl-4 col-md-5 col-sm-7 footer_logo wow fadeIn">
+                    <a href="~/index.html"><img src="~/images/footer-logo.png" alt=""></a>
+                    <p>© 2019 <a href="~/#">Template_mr</a>. All rights reserved</p>
+                    <ul class="footer_social">
+                        <li><a href="~/#"></a></li>
+                        <li><a href="~/#"></a></li>
+                        <li><a href="~/#"></a></li>
+                        <li><a href="~/#"></a></li>
+                    </ul>
+                </div>
+                <div class="footer_widget col-xl-2 col-md-4 col-sm-5 wow fadeIn" data-wow-delay="0.2s">
+                    <h4>About</h4>
+                    <ul class="footer_nav">
+                        <li><a href="~/#">How it Works</a></li>
+                        <li><a href="~/#">Guarantee</a></li>
+                        <li><a href="~/#">Security</a></li>
+                        <li><a href="~/contact.html">Contact</a></li>
+                        <li><a href="~/#">Our story</a></li>
+                    </ul>
+                </div>
+                <div class="footer_widget col-xl-2  col-md-3 col-sm-4 wow fadeIn" data-wow-delay="0.4s">
+                    <h4>Solution</h4>
+                    <ul class="footer_nav">
+                        <li><a href="~/#">Car Loan</a></li>
+                        <li><a href="~/#">Personal Loan</a></li>
+                        <li><a href="~/#">Education Loan</a></li>
+                        <li><a href="~/#">Business Loan</a></li>
+                    </ul>
+                </div>
+                <div class="footer_widget col-xl-2  col-md-5 col-sm-4 wow fadeIn" data-wow-delay="0.6s">
+                    <h4>Need help?</h4>
+                    <ul class="footer_nav">
+                        <li><a href="~/#">Find a branch</a></li>
+                        <li><a href="~/contact.html">Contact us</a></li>
+                        <li><a href="~/faq.html">FAQ</a></li>
+                        <li><a href="~/#">APR</a></li>
+                    </ul>
+                </div>
+                <div class="footer_widget col-xl-2  col-md-4 col-sm-4 wow fadeIn" data-wow-delay="0.8s">
+                    <h4>Save &amp; Invest </h4>
+                    <ul class="footer_nav">
+                        <li><a href="~/#">Credit Cards</a></li>
+                        <li><a href="~/#">Mortgages</a></li>
+                        <li><a href="~/#">Home Equity</a></li>
+                        <li><a href="~/#">Lines of Credit</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+    <!-- End Footer Area -->
+    <!-- Scroll Top Button -->
+    <button class="scroll-top">
+        <i class="fa fa-angle-double-up"></i>
+    </button>
+
+
+    <!-- jQuery v3.3.1 -->
+    <script src="~/js/jquery-3.3.1.min.js"></script>
+    <!-- Bootstrap v4.0.0 -->
+    <script src="~/js/popper.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <!-- Rev slider js -->
+    <script src="~/vendors/revolution/js/jquery.themepunch.tools.min.js"></script>
+    <script src="~/vendors/revolution/js/jquery.themepunch.revolution.min.js"></script>
+    <script src="~/vendors/revolution/js/extensions/revolution.extension.actions.min.js"></script>
+    <script src="~/vendors/revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
+    <script src="~/vendors/revolution/js/extensions/revolution.extension.layeranimation.min.js"></script>
+    <script src="~/vendors/revolution/js/extensions/revolution.extension.navigation.min.js"></script>
+    <script src="~/vendors/revolution/js/extensions/revolution.extension.kenburn.min.js"></script>
+    <script src="~/vendors/revolution/js/extensions/revolution.extension.video.min.js"></script>
+    <!-- Extra Plugin -->
+    <script src="~/vendors/animate-css/wow.min.js"></script>
+    <script src="~/vendors/counterup/jquery.waypoints.min.js"></script>
+    <script src="~/vendors/counterup/jquery.counterup.min.js"></script>
+    <script src="~/vendors/owl-carousel/owl.carousel.min.js"></script>
+    <script src="~/vendors/bootstrap-selector/jquery.nice-select.min.js"></script>
+    <!-- Theme js / Custom js -->
+    <script src="~/js/theme.js"></script>
 </body>
 </html>

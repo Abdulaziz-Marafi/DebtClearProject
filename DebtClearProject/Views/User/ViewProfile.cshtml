@@ -4,6 +4,8 @@
 }
 
 
+<h1>ViewProfile</h1>
+            
 <div class="text-center">
     <h1 class="display-4">Welcome, @Model.FirstName @Model.LastName.</h1>
     <div class="card" style="width: 18rem;">
@@ -16,5 +18,35 @@
             <li class="list-group-item">@Html.DisplayNameFor(x => x.Balance): @Model.Balance$</li>
             <li class="list-group-item">@Html.DisplayNameFor(x => x.Email): @Model.Email </li>
         </ul>
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-5">
+            <div class="project-info-box mt-0">
+                <h5>Profile Details</h5>
+               
+            </div><!-- / project-info-box -->
+
+            <div class="project-info-box">
+                <p><b> First Name:</b> @Model.FName</p>
+                <p><b>Last Name:</b> @Model.LName</p>
+                <p><b>Email:</b> @Model.Email</p>
+                <p><b>Balance:</b> @Model.Balance</p>
+                <p><b>Id:</b> @Model.Id</p>
+                
+            </div><!-- / project-info-box -->
+
+        </div><!-- / column -->
+
+        <div class="col-md-7">
+            <img src="~/Uploads/@Model.Img" alt="project-image" class="rounded">
+            <div class="project-info-box">
+               
+              
+            </div><!-- / project-info-box -->
+        </div><!-- / column -->
     </div>
 </div>
