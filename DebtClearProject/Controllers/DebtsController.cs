@@ -125,14 +125,15 @@ namespace DebtClearProject.Controllers
         public async Task<IActionResult> Index2()
         {
             var curr = await userManager.GetUserAsync(User);
-            var userdebts = db.UserDebts.Where(x=> x.UserId==curr.Id).ToList();
-            var debts = db.Debts.Where(x=> x.DebtId == userdebts.Select(x => x.DebtId).FirstOrDefault()).ToList();
-            DebtUserDebtsViewModel userDebtsData = new DebtUserDebtsViewModel()
-            {
-                Debts = debts,
-                UserDebts = userdebts
-            };
-            return View(debts);
+            //var userdebts = db.UserDebts.Where(x=> x.UserId==curr.Id).ToList();
+            //var debts = db.Debts.Where(x=> x.DebtId == userdebts.Select(x => x.DebtId).FirstOrDefault()).ToList();
+            var userDebts2 = await db.UserDebts.Where(x => x.UserId == curr.Id).Include(x=>x.Debt).ToListAsync();
+            //DebtUserDebtsViewModel userDebtsData = new DebtUserDebtsViewModel()
+            //{
+            //    Debts = debts,
+            //    UserDebts = userdebts
+            //};
+            return View(userDebts2);
         }
 
         [HttpGet]
@@ -241,8 +242,11 @@ namespace DebtClearProject.Controllers
             {
                 return NotFound();
             }
+            // Change UserDebt Status
             userDebt.Status = UserDebts.DebtStatus.Approved;
-            db.SaveChanges();
+            await db.SaveChangesAsync();
+            // Change Debt Status according to UserDebt
+            await UpdateDebtStatus(userDebt.DebtId);
             return RedirectToAction(nameof(Index2));
         }
         public async Task<IActionResult> RejecrDebt(Guid? id)
@@ -254,8 +258,34 @@ namespace DebtClearProject.Controllers
                 return NotFound();
             }
             userDebt.Status = UserDebts.DebtStatus.Rejected;
-            db.SaveChanges();
+            await db.SaveChangesAsync();
+            // Change Debt Status according to UserDebt
+            await UpdateDebtStatus(userDebt.DebtId);
             return RedirectToAction(nameof(Index2));
+        }
+
+        // Function to change the debt status according to the user's decision
+        private async Task UpdateDebtStatus(Guid debtId)
+        {
+            var userDebts = await db.UserDebts.Where(ud => ud.DebtId == debtId).ToListAsync();
+            var debt = await db.Debts.FirstOrDefaultAsync(d => d.DebtId == debtId);
+
+            if (debt == null)
+            {
+                return;
+            }
+
+            if (userDebts.All(ud => ud.Status == UserDebts.DebtStatus.Approved))
+            {
+                debt.Status = Debt.DebtStatus.Approved;
+            }
+            else if (userDebts.Any(ud => ud.Status == UserDebts.DebtStatus.Rejected))
+            {
+                // If reject maybe go and reject all for o
+                debt.Status = Debt.DebtStatus.Rejected;
+            }
+
+            await db.SaveChangesAsync();
         }
 
     }

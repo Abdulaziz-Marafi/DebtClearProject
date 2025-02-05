@@ -1,9 +1,7 @@
 ﻿using DebtClearProject.Models.ViewModels;
 using Microsoft.AspNetCore.Identity;
-using System.Threading;
 using Microsoft.AspNetCore.Mvc;
 using DebtClearProject.Models;
-using Microsoft.AspNetCore.Hosting;
 
 namespace DebtClearProject.Controllers
 {
@@ -27,10 +25,16 @@ namespace DebtClearProject.Controllers
         {
 
             var r = await userManager.GetUserAsync(User);
-            //HttpContext.Session.SetString("Balance", r.Balance.ToString());
-            HttpContext.Session.SetString("Name", r.UserName);
+            DisplayUserViewModel model = new DisplayUserViewModel()
+            {
+                Balance = r.Balance,
+                Email = r.Email,
+                FirstName = r.FirstName,
+                LastName = r.LastName,
+                Img = r.ProfilePicture
+            };
 
-            return View();
+            return View(model);
         }
         [HttpGet]
         public async Task<IActionResult> UpdateProfile()
@@ -44,8 +48,8 @@ namespace DebtClearProject.Controllers
                 Email = r.Email,
                 FName = r.FirstName,
                 LName = r.LastName,
-                Img = r.ProfilePicture,
-                Id = r.Id
+                Img = r.ProfilePicture
+                //Id = r.Id
             };
             return View(model);
 
@@ -73,7 +77,7 @@ namespace DebtClearProject.Controllers
                 var result = await userManager.UpdateAsync(user);
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Display");
+                    return RedirectToAction("ViewProfile");
                 }
 
                 foreach (var error in result.Errors)
