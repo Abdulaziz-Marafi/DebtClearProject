@@ -3,8 +3,7 @@
     ViewData["Title"] = "ViewProfile";
 }
 
-
-<h1>ViewProfile</h1>
+<h1>Profile Details</h1>
             
 @* @* <div class="text-center">
     <h1 class="display-4">Welcome, @Model.FirstName @Model.LastName.</h1>
@@ -25,23 +24,26 @@
 <div class="container">
     <div class="row">
         <div class="col-md-5">
-            <div class="project-info-box mt-0">
-                <h5>Profile Details</h5>
+            <div class="project-info-box mt-2">
+                
                
             </div><!-- / project-info-box -->
 
             <div class="project-info-box">
-                <p><b> First Name:</b> @Model.FirstName</p>
-                <p><b>Last Name:</b> @Model.LastName</p>
-                <p><b>Email:</b> @Model.Email</p>
-                <p><b>Balance:</b> @Model.Balance</p>
+                <p style="font-size:larger;"><b>First Name:</b> @Model.FirstName</p>
+                <p style="font-size:larger;"><b>Last Name:</b> @Model.LastName</p>
+                <p style="font-size:larger;"><b>Email:</b> @Model.Email</p>
+                <p style="font-size:larger;"><b>Balance:</b> @Model.Balance</p>
+                <div style="margin-top:15px;">
+					<a asp-action="UpdateProfile" asp-controller="User" class="btn btn-outline-secondary">Update Profile</a>
+                </div>
                 
             </div><!-- / project-info-box -->
 
         </div><!-- / column -->
 
         <div class="col-md-7">
-            <img src="~/Uploads/@Model.Img" alt="project-image" class="rounded">
+            <img src="~/Uploads/@Model.Img" alt="project-image" class="rounded profile-image">
             <div class="project-info-box">
                
               
@@ -49,3 +51,13 @@
         </div><!-- / column -->
     </div>
 </div>
+
+<style>
+    .profile-image {
+        max-width: 350px; /* Set the maximum width */
+        max-height: 350px; /* Set the maximum height */
+        width: auto; /* Maintain aspect ratio */
+        height: auto; /* Maintain aspect ratio */
+        object-fit: cover; /* Ensure the image covers the area without distortion */
+    }
+</style>
