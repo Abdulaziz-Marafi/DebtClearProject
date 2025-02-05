@@ -1,22 +1,51 @@
-﻿@model ViewProfileViewModel
+﻿@model DisplayUserViewModel
 @{
     ViewData["Title"] = "ViewProfile";
 }
 
+
 <h1>ViewProfile</h1>
-<h5>@Context.Session.GetString("Name")</h5>
+            
+@* @* <div class="text-center">
+    <h1 class="display-4">Welcome, @Model.FirstName @Model.LastName.</h1>
+    <div class="card" style="width: 18rem;">
+        <img class=" img-thumbnail card-img-top" src="~/Images/@Model.Img" alt="Card image cap">
+        <div class="card-body">
+            <h5 class="card-title">@Model.FirstName @Model.LastName</h5>
+            @* <p class="card-text">@Html.DisplayNameFor(x => x.Id): @Model.Id</p> 
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">@Html.DisplayNameFor(x => x.Balance): @Model.Balance$</li>
+            <li class="list-group-item">@Html.DisplayNameFor(x => x.Email): @Model.Email </li>
+        </ul>
+    </div>
+</div>
+ *@
 
-<h1 class="text text-center">Your profile</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-md-5">
+            <div class="project-info-box mt-0">
+                <h5>Profile Details</h5>
+               
+            </div><!-- / project-info-box -->
 
-<table class="table table-bordered text text-center">
-    <tr>
-        <td>@Html.DisplayNameFor(x => x.Name)</td>
-       
-    </tr>
-    <tr>
-        <td>
-            @Context.Session.GetString("Name")
-        </td>
-       
-    </tr>
-</table>
+            <div class="project-info-box">
+                <p><b> First Name:</b> @Model.FirstName</p>
+                <p><b>Last Name:</b> @Model.LastName</p>
+                <p><b>Email:</b> @Model.Email</p>
+                <p><b>Balance:</b> @Model.Balance</p>
+                
+            </div><!-- / project-info-box -->
+
+        </div><!-- / column -->
+
+        <div class="col-md-7">
+            <img src="~/Uploads/@Model.Img" alt="project-image" class="rounded">
+            <div class="project-info-box">
+               
+              
+            </div><!-- / project-info-box -->
+        </div><!-- / column -->
+    </div>
+</div>

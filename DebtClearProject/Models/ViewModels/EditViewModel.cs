@@ -26,7 +26,7 @@ namespace DebtClearProject.Models.ViewModels
         public decimal Balance { get; set; }
 
         public IFormFile? NewImg { get; set; }
-        public string Img { get; internal set; }
-        public string Id { get; internal set; }
+        public string? Img { get; set; }
+        //public string Id { get; internal set; }
     }
 }

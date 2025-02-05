@@ -1,11 +1,11 @@
 ﻿using DebtClearProject.Models.ViewModels;
 using Microsoft.AspNetCore.Identity;
-using System.Threading;
 using Microsoft.AspNetCore.Mvc;
 using DebtClearProject.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using DebtClearProject.Data;
+
 
 namespace DebtClearProject.Controllers
 {
@@ -29,13 +29,23 @@ namespace DebtClearProject.Controllers
         [HttpGet]
         public async Task<IActionResult> ViewProfile()
         {
-
+            // ADD view Model
             var r = await userManager.GetUserAsync(User);
-            //HttpContext.Session.SetString("Balance", r.Balance.ToString());
-            HttpContext.Session.SetString("Name", r.UserName);
-
-            return View();
+            if (r == null)
+            {
+                return NotFound();
+            }
+            DisplayUserViewModel model = new DisplayUserViewModel()
+            {
+                Balance = r.Balance,
+                Email = r.Email,
+                FirstName = r.FirstName,
+                LastName = r.LastName,
+                Img = r.ProfilePicture
+            };
+            return View(model);
         }
+        
         [HttpGet]
         public async Task<IActionResult> UpdateProfile()
         {
@@ -48,8 +58,8 @@ namespace DebtClearProject.Controllers
                 Email = r.Email,
                 FName = r.FirstName,
                 LName = r.LastName,
-                Img = r.ProfilePicture,
-                Id = r.Id
+                Img = r.ProfilePicture
+                //Id = r.Id
             };
             return View(model);
 
@@ -77,7 +87,7 @@ namespace DebtClearProject.Controllers
                 var result = await userManager.UpdateAsync(user);
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Display");
+                    return RedirectToAction("ViewProfile");
                 }
 
                 foreach (var error in result.Errors)
@@ -95,7 +105,7 @@ namespace DebtClearProject.Controllers
 
             if (Image != null)
             {
-                string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "Images");
+                string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "Uploads");
                 uniqueFileName = Guid.NewGuid().ToString() + "_" + Image.FileName;
                 string filePath = Path.Combine(uploadsFolder, uniqueFileName);
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
