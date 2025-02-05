@@ -99,7 +99,7 @@ namespace DebtClearProject.Controllers
 
             if (Image != null)
             {
-                string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "Images");
+                string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "Uploads");
                 uniqueFileName = Guid.NewGuid().ToString() + "_" + Image.FileName;
                 string filePath = Path.Combine(uploadsFolder, uniqueFileName);
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
