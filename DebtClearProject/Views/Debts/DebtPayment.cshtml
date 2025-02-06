@@ -11,7 +11,7 @@
 <form method="post" asp-action="DebtPayment" asp-controller="Debts">
     <div asp-validation-summary="All" class="text-warning">
     </div>
-    <table class="table table-bordered">
+    <table class="table table-bordered col-5">
         <tr>
             <td>
 			@Html.DisplayNameFor(x => x.RemainingDebt)
@@ -37,8 +37,8 @@
 			<td>
 				<button type="submit" class="btn btn-primary">Pay</button>
 			</td>
-                          
-     </table>
+
+            </table>
 
 </form>
 }else {

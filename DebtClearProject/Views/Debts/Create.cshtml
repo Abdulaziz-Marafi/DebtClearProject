@@ -1,12 +1,12 @@
-﻿@model DebtViewModel
+@model DebtViewModel
 
 @{
     ViewData["Title"] = "Create";
 }
 
-<h1 class="cc">Create</h1>
 
-<h4 class="cc">Debt</h4>
+<h1>Create Debt</h1>
+
 <hr />
 <div class="row">
     <div class="aa">
@@ -19,7 +19,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Ratios[0]" class="control-label">Your Ratio</label>
-                <input asp-for="Ratios[0]" class="form-control" id="ratio0" />
+                <input asp-for="Ratios[0]" class="form-control" id="ratio0" value="50" min="0" max="100" />
                 <span asp-validation-for="Ratios[0]" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -29,7 +29,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Ratios[1]" class="control-label">Other User Ratio</label>
-                <input asp-for="Ratios[1]" class="form-control" id="ratio1" />
+                <input asp-for="Ratios[1]" class="form-control" id="ratio1" value="50" min="0" max="100" />
                 <span asp-validation-for="Ratios[1]" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -59,22 +59,34 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index2" asp-controller="Debts" class="btn btn-outline-secondary">Back to Debts</a>
 </div>
 
 @section Scripts {
     <script>
-        document.getElementById('ratio0').addEventListener('input', function() {
-            var ratio0 = parseFloat(this.value) || 0;
-            var ratio1 = 100 - ratio0;
-            document.getElementById('ratio1').value = ratio1.toFixed(2);
-        });
+        function adjustRatios() {
+            var ratio0 = parseFloat(document.getElementById('ratio0').value) || 0;
+            var ratio1 = parseFloat(document.getElementById('ratio1').value) || 0;
 
-        document.getElementById('ratio1').addEventListener('input', function() {
-            var ratio1 = parseFloat(this.value) || 0;
-            var ratio0 = 100 - ratio1;
+            if (ratio0 < 0) ratio0 = 0;
+            if (ratio0 > 100) ratio0 = 100;
+            if (ratio1 < 0) ratio1 = 0;
+            if (ratio1 > 100) ratio1 = 100;
+
+            if (ratio0 + ratio1 !== 100) {
+                if (this.id === 'ratio0') {
+                    ratio1 = 100 - ratio0;
+                } else {
+                    ratio0 = 100 - ratio1;
+                }
+            }
+
             document.getElementById('ratio0').value = ratio0.toFixed(2);
-        });
+            document.getElementById('ratio1').value = ratio1.toFixed(2);
+        }
+
+        document.getElementById('ratio0').addEventListener('blur', adjustRatios);
+        document.getElementById('ratio1').addEventListener('blur', adjustRatios);
     </script>
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

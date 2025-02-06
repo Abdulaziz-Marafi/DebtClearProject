@@ -108,7 +108,7 @@ namespace DebtClearProject.Controllers
                 //}
                 //db.SaveChanges();
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index2));
             }
             else
             {
