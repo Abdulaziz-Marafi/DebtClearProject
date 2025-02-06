@@ -5,6 +5,8 @@
 
 <h1>Pay off Debt</h1>
 
+                    
+
 @if(Model.RemainingDebt !=0){
 <form method="post" asp-action="DebtPayment" asp-controller="Debts">
     <div asp-validation-summary="All" class="text-warning">
@@ -18,7 +20,10 @@
                 @Model.RemainingDebt
             </td>
         </tr>
+                                    
+
         <tr>
+            <tbody>
             <td><label asp-for="Amount"></label></td>
             <td>
                     <input asp-for="Amount" placeholder="Enter Amount" class="form-control" min="0" max="@Model.RemainingDebt" />
@@ -27,10 +32,14 @@
         </tr>
         <input type="hidden" asp-for="UserDebtId" />
 		<tr>
+
+
 			<td>
 				<button type="submit" class="btn btn-primary">Pay</button>
 			</td>
+
             </table>
+
 </form>
 }else {
     <p><span class="alert alert-success"> Your portion of the debt is already paid for.</span></p>
@@ -55,4 +64,3 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
-
