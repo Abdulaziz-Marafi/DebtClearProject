@@ -57,6 +57,14 @@ body {
     justify-content: space-between;
 }
 
+.profile-image {
+    max-width: 350px; /* Set the maximum width */
+    max-height: 350px; /* Set the maximum height */
+    width: auto; /* Maintain aspect ratio */
+    height: auto; /* Maintain aspect ratio */
+    object-fit: cover; /* Ensure the image covers the area without distortion */
+}
+
 .borderLine::before {
     content: '';
     position: absolute;

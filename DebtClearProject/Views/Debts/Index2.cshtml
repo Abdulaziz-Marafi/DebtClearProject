@@ -65,6 +65,7 @@
                                     {
                                         <td>
                                             <a asp-action="DebtPayment" asp-controller="Debts" asp-route-id="@userDebt.UserDebtsId" class="btn btn-outline-primary">Pay Off</a>
+                                            <a asp-action="DebtTransactions" asp-controller="Transactions" asp-route-id="@userDebt.DebtId" class="btn btn-outline-secondary">Debt Transactions</a>
                                         </td>
                                     }
                                     else if (userDebt.Status == UserDebts.DebtStatus.Pending)
