@@ -108,7 +108,7 @@ namespace DebtClearProject.Controllers
                 //}
                 //db.SaveChanges();
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index2));
             }
             else
             {
@@ -249,7 +249,7 @@ namespace DebtClearProject.Controllers
             await UpdateDebtStatus(userDebt.DebtId);
             return RedirectToAction(nameof(Index2));
         }
-        public async Task<IActionResult> RejecrDebt(Guid? id)
+        public async Task<IActionResult> RejectDebt(Guid? id)
         {
             var curr = await userManager.GetUserAsync(User);
             var userDebt = db.UserDebts.Where(x => x.UserDebtsId == id).FirstOrDefault();
