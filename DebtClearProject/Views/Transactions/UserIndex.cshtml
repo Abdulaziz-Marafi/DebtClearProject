@@ -4,11 +4,20 @@
     ViewData["Title"] = "UserIndex";
 }
 
-<h1>My Transactions</h1>
 
 
-<table class="table">
-    <thead>
+<div class="container">
+    <div class="row">
+        <div class="col-12 mb-3 mb-lg-5">
+            <div class="position-relative card table-nowrap table-card">
+                <div class ="card-header align-items-center">
+                    <h5 class="mb-0">My Transaction</h5>
+                </div>
+                <div class="table-responsive">
+                    <table class="table mb-0">
+                        <thead class="small text-uppercase bg-body text-muted">
+                      
+   
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Amount)
@@ -56,5 +65,13 @@
 }
     </tbody>
 </table>
+ </div>
+
+                <div class="card-footer text-end">
 <a asp-action="Index2" asp-controller="Debts" class="btn btn-outline-secondary">Back to Debts</a>
 
+               </div>
+            </div>
+        </div>
+    </div>
+</div>
