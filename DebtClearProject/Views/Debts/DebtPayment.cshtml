@@ -3,7 +3,7 @@
     ViewData["Title"] = "DebtPayment";
 }
 
-<h1>Pay off Debt</h1>
+
 
                     
 
@@ -11,7 +11,15 @@
 <form method="post" asp-action="DebtPayment" asp-controller="Debts">
     <div asp-validation-summary="All" class="text-warning">
     </div>
-    <table class="table table-bordered col-5">
+
+
+
+        <div class="col-12 mb-3 mb-lg-5">
+            <div class="position-relative card table-nowrap table-card">
+                <div class="card-header align-items-center">
+                    <h4 class="mb-0"> Pay off Debt</h4>
+
+    <table class="table table-bordered">
         <tr>
             <td>
 			@Html.DisplayNameFor(x => x.RemainingDebt)
@@ -39,7 +47,9 @@
 			</td>
 
             </table>
-
+            </div>
+            </div>
+            </div>
 </form>
 }else {
     <p><span class="alert alert-success"> Your portion of the debt is already paid for.</span></p>
