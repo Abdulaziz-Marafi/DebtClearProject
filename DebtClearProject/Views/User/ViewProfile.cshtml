@@ -3,9 +3,7 @@
     ViewData["Title"] = "ViewProfile";
 }
 
-
-<h1>ViewProfile</h1>
-            
+<h1>Profile Details</h1>            
 @* @* <div class="text-center">
     <h1 class="display-4">Welcome, @Model.FirstName @Model.LastName.</h1>
     <div class="card" style="width: 18rem;">
@@ -26,15 +24,18 @@
     <div class="row">
         <div class="col-md-5">
             <div class="project-info-box mt-0">
-                <h5>Profile Details</h5>
+               
                
             </div><!-- / project-info-box -->
 
             <div class="project-info-box">
-                <p><b> First Name:</b> @Model.FirstName</p>
-                <p><b>Last Name:</b> @Model.LastName</p>
-                <p><b>Email:</b> @Model.Email</p>
-                <p><b>Balance:</b> @Model.Balance</p>
+                <p style="font-size:larger"><b> First Name:</b> @Model.FirstName</p>
+
+                <p style ="font-size:larger"><b>Last Name:</b> @Model.LastName</p>
+
+                <p style="font-size:larger"><b>Email:</b> @Model.Email</p>
+
+                <p style="font-size:larger"><b>Balance:</b> @Model.Balance</p>
                 
             </div><!-- / project-info-box -->
 
