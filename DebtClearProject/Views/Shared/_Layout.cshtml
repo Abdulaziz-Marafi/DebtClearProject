@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@inject SignInManager<User> signInManager
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -32,22 +33,20 @@
                 </ul>
                 <div class="right_menu col-lg-6 col-md-5 p-0">
                     <ul class="right_nav">
-						<li><a asp-action="Register" asp-controller="Account" class="customA">Register</a></li>
-						<li><a asp-action="Login" asp-controller="Account" class="customA">Login</a></li>
-                        @* <li><a href="~/#"><i class="fa fa-facebook"></i></a></li>
-                        <li><a href="~/#"><i class="fa fa-google-plus"></i></a></li>
-                        <li><a href="~/#"><i class="fa fa-vine"></i></a></li> *@
-
-                        
-                        @* <li class="dropdown search_dropbown">
-                            <a class="nav-link dropdown-toggle" href="~/" role="button" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-search"></i></a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <input type="text" placeholder="Search..">
-                                    <span><i class="fa fa-search"></i></span>
-                                </li>
-                            </ul>
-                        </li> *@
+                            @if (signInManager.IsSignedIn(User))
+                            {
+                                <li><a asp-action="ViewProfile" asp-controller="User" class="customA">Profile</a></li>
+                                <li><a asp-action="Index2" asp-controller="Debts" class="customA">My Debts</a></li>
+                                <li><a asp-action="UserIndex" asp-controller="Transactions" class="customA">My Transactions</a></li>
+                                <form asp-action="Logout" asp-controller="Account" method="post" class="right_nav" style="margin-left:20px; margin-top:11px;">
+                                    <li> <input type="submit" class="btn btn-outline-danger" value="Logout" /></li>
+                                 </form>
+                            }
+                            else
+                            {
+                                <li><a asp-action="Register" asp-controller="Account" class="customA">Register</a></li>
+                                <li><a asp-action="Login" asp-controller="Account" class="customA">Login</a></li>
+                            }
                     </ul>
                 </div>
             </div>
@@ -67,8 +66,8 @@
         <div class="container">
             <div class="footer_inner row">
                 <div class="col-xl-4 col-md-5 col-sm-7 footer_logo wow fadeIn">
-                    <a href="~/index.html"><img src="~/images/footer-logo.png" alt=""></a>
-                    <p>© 2019 <a href="~/#">Template_mr</a>. All rights reserved</p>
+                 @*    <a href="~/index.html"><img src="~/images/footer-logo.png" alt=""></a> *@
+                    <p>© 2025 <a href="~/#">DebtClear</a>. All rights reserved</p>
                     <ul class="footer_social">
                         <li><a href="~/#"></a></li>
                         <li><a href="~/#"></a></li>

@@ -10968,4 +10968,23 @@ a.text-dark:hover {
 	}
 }
 
+.aa {
+	background-color: #fff;
+	border: 1px solid #ddd;
+	border-radius: 15px;
+	padding: 20px;
+	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+	margin: 20px auto;
+	transition: transform 0.3s, box-shadow 0.3s;
+	overflow: hidden;
+	max-width: 450px;
+	text-align: left;
+}
+
+
+.cc{
+	text-align:center
+
+}
+
 /*# sourceMappingURL=bootstrap.min.css.map */
