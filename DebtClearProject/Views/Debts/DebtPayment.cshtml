@@ -9,8 +9,7 @@
 
 @if(Model.RemainingDebt !=0){
 <form method="post" asp-action="DebtPayment" asp-controller="Debts">
-    <div asp-validation-summary="All" class="text-warning">
-    </div>
+
     <table class="table table-bordered col-5">
         <tr>
             <td>
@@ -26,19 +25,20 @@
             <tbody>
             <td><label asp-for="Amount"></label></td>
             <td>
-                    <input asp-for="Amount" placeholder="Enter Amount" class="form-control" min="0" max="@Model.RemainingDebt" />
+                <input asp-for="Amount" placeholder="Enter Amount" class="form-control" min="0.01" max="@Model.RemainingDebt" />
                 <span class="text-danger" asp-validation-for="Amount"></span>
             </td>
+
         </tr>
+        <tr>
         <input type="hidden" asp-for="UserDebtId" />
-		<tr>
+        <input type="hidden" asp-for="RemainingDebt"/>
+		<button type="submit" class="btn btn-primary">Pay</button>
+            </tr>
+		
+     
 
-
-			<td>
-				<button type="submit" class="btn btn-primary">Pay</button>
-			</td>
-
-            </table>
+     </table>
 
 </form>
 }else {
@@ -52,8 +52,8 @@
 
             amountInput.addEventListener('input', function () {
                 var value = parseFloat(this.value);
-                if (value < 0) {
-                    this.value = 0;
+                if (value < 0.01) {
+                    this.value = 0.01;
                 } else if (value > maxAmount) {
                     this.value = maxAmount;
                 }
