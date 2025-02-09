@@ -2,10 +2,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using DebtClearProject.Models;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
-using DebtClearProject.Data;
-
 
 namespace DebtClearProject.Controllers
 {
@@ -16,13 +12,11 @@ namespace DebtClearProject.Controllers
         private UserManager<User> userManager;
         private SignInManager<User> signInManager;
         private readonly IWebHostEnvironment webHostEnvironment;
-        private ApplicationDbContext db;
-        public UserController(UserManager<User> _userManager, SignInManager<User> _signInManager,IWebHostEnvironment _webHostEnvironment, ApplicationDbContext _db)
+        public UserController(UserManager<User> _userManager, SignInManager<User> _signInManager,IWebHostEnvironment _webHostEnvironment)
         {
             userManager = _userManager;
             signInManager = _signInManager;
             webHostEnvironment = _webHostEnvironment;
-            db = _db;
         }
         #endregion
 
@@ -114,80 +108,6 @@ namespace DebtClearProject.Controllers
                 }
             }
             return uniqueFileName;
-        }
-        [HttpGet]
-        public async Task<IActionResult> History()
-        {
-            var user = await userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                return RedirectToAction("Login", "Account");
-            }
-
-            var transactions = await db.Transactions
-                .Where(t => t.UserId == user.Id)
-                .Select(t => new TransactionViewModel
-                {
-                    TransactionId = t.TransactionId,
-                    Date = t.TransactionDate,
-                    Amount = t.Amount,
-                    UserId = t.UserId,
-                   
-                    Type = "Status"
-                    
-                })
-                .ToListAsync();
-
-            return View(transactions);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> FilterHistory(string filterType)
-        {
-            var user = await userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                return RedirectToAction("Login", "Account");
-            }
-
-            var transactions = db.Transactions.AsQueryable();
-
-            var modelAll = await transactions
-                .Select(t => new TransactionViewModel
-                {
-                    TransactionId = t.TransactionId,
-                    Date = t.TransactionDate,
-                    Amount = t.Amount,
-                    UserId = t.UserId,
-                    
-                    Type= "Status"
-                    
-                })
-                .ToListAsync();
-            if (filterType == "All")
-            {
-                View("History", modelAll);
-            }
-
-            if (!string.IsNullOrEmpty(filterType) && filterType != "All")
-            {
-                transactions = transactions.Where(t => "Status" == filterType);
-            }
-
-            var model = await transactions
-                .Where(t => t.UserId == user.Id)
-                .Select(t => new TransactionViewModel
-                {
-                    TransactionId = t.TransactionId,
-                    Date = t.TransactionDate,
-                    Amount = t.Amount,
-                    UserId = t.UserId,
-                    Type = "Status"
-
-                })
-                .ToListAsync();
-
-            return View("History", model);
         }
 
 
