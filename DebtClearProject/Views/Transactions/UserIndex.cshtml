@@ -1,76 +1,53 @@
-﻿@model IEnumerable<DebtClearProject.Models.Transaction>
+﻿@model IEnumerable<TransactionViewModel>
 
 @{
     ViewData["Title"] = "UserIndex";
 }
 
-
-
 <div class="container">
     <div class="row">
         <div class="col-12 mb-3 mb-lg-5">
             <div class="position-relative card table-nowrap table-card">
-                <div class ="card-header align-items-center">
-                    <h5 class="mb-0">My Transaction</h5>
+                <div class="card-header align-items-center">
+                    <h5 class="mb-0">My Transactions</h5>
                 </div>
                 <div class="table-responsive">
                     <table class="table mb-0">
                         <thead class="small text-uppercase bg-body text-muted">
-                      
-   
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Amount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Status)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TransactionDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RemainingBalance)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.User)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Debt)
-            </th>
-
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Amount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TransactionDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RemainingBalance)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DebtId)
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
- </div>
-
+                            <tr>
+                                <th>@Html.DisplayNameFor(model => model.Amount)</th>
+                                <th>@Html.DisplayNameFor(model => model.Status)</th>
+                                <th>@Html.DisplayNameFor(model => model.TransactionDate)</th>
+                                <th>@Html.DisplayNameFor(model => model.RemainingBalance)</th>
+                                <th>@Html.DisplayNameFor(model => model.DebtName)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => item.Amount)</td>
+                                    <td>
+                                        @if (item.Status == TransactionViewModel.TransactionStatus.Success)
+                                        {
+                                            <span class="badge fs-6 fw-normal bg-tint-success text-success">Success</span>
+                                        }
+                                        else if (item.Status == TransactionViewModel.TransactionStatus.Failed)
+                                        {
+                                            <span class="badge fs-6 fw-normal bg-tint-danger text-danger">Failed</span>
+                                        }
+                                    </td>
+                                    <td>@Html.DisplayFor(modelItem => item.TransactionDate)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.RemainingBalance)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.DebtName)</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
                 <div class="card-footer text-end">
-<a asp-action="Index2" asp-controller="Debts" class="btn btn-outline-secondary">Back to Debts</a>
-
-               </div>
+                    <a asp-action="Index2" asp-controller="Debts" class="btn btn-outline-secondary">Go to Debts</a>
+                </div>
             </div>
         </div>
     </div>

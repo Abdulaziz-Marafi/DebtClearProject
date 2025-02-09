@@ -3,7 +3,7 @@
     ViewData["Title"] = "UpdateProfile";
 }
 
-<h1>UpdateProfile</h1>
+<h1>Update Profile</h1>
 
 <hr />
 <div class="row">
@@ -30,7 +30,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Img" class="control-label"></label>
-                <img src="~/Images/@Model.Img" alt="Profile Picture" class="img-thumbnail" />
+                <img src="~/Uploads/@Model.Img" alt="Profile Picture" class="img-thumbnail profile-image" />
             </div>
             <div class="form-group">
                 <label asp-for="NewImg" class="control-label"></label>
@@ -42,11 +42,19 @@
             </div> *@
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
+                <a asp-action="ViewProfile" asp-controller="User" class="btn btn-outline-secondary">Back to Profile</a>
+
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="ViewProfile" asp-controller="User" class="btn btn-outline-secondary">Back to Profile</a>
-</div>
+<style>
+    .profile-image {
+        max-width: 350px; /* Set the maximum width */
+        max-height: 350px; /* Set the maximum height */
+        width: auto; /* Maintain aspect ratio */
+        height: auto; /* Maintain aspect ratio */
+        object-fit: cover; /* Ensure the image covers the area without distortion */
+    }
+</style>
