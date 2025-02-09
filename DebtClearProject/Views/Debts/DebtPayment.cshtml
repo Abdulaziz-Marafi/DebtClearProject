@@ -4,9 +4,6 @@
 }
 
 
-<h1>Pay off @Model.DebtName Debt</h1>
-
-
                     
 
 @if(Model.RemainingDebt !=0){
@@ -19,7 +16,7 @@
         <div class="col-12 mb-3 mb-lg-5">
             <div class="position-relative card table-nowrap table-card">
                 <div class="card-header align-items-center">
-                    <h4 class="mb-0"> Pay off Debt</h4>
+                    <h4 class="mb-0"> Pay off @Model.DebtName Debt</h4>
 
     <table class="table table-bordered">
 
@@ -46,17 +43,18 @@
         <input type="hidden" asp-for="UserDebtId" />
         <input type="hidden" asp-for="RemainingDebt"/>
         </tr>
-        <div>
-            <button type="submit" class="btn btn-outline-primary">Pay</button>
-            </div>
-        <div>
-				<a asp-action="Index2" asp-controller="Debts" class="btn btn-outline-info">Back to Debts</a>
-				<a asp-action="DebtTransactions" asp-controller="Transactions" asp-route-id="@Model.DebtId"class="btn btn-outline-secondary">Debt Transactions</a>
-        </div>
+
 
 
 
             </table>
+                    <div>
+                        <button type="submit" class="btn btn-outline-primary">Pay</button>
+                    </div>
+                    <div>
+                        <a asp-action="Index2" asp-controller="Debts" class="btn btn-outline-info">Back to Debts</a>
+                        <a asp-action="DebtTransactions" asp-controller="Transactions" asp-route-id="@Model.DebtId" class="btn btn-outline-secondary">Debt Transactions</a>
+                    </div>
             </div>
             </div>
             </div>
