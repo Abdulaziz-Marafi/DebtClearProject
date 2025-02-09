@@ -18,17 +18,22 @@
                 <span asp-validation-for="TotalAmount" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="DebtName" class="control-label"></label>
+                <input asp-for="DebtName" class="form-control" />
+                <span asp-validation-for="DebtName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Ratios[0]" class="control-label">Your Ratio</label>
                 <input asp-for="Ratios[0]" class="form-control" id="ratio0" value="50" min="0" max="100" />
                 <span asp-validation-for="Ratios[0]" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="SelectedEmailUser" class="control-label">Other User Email</label>
+                <label asp-for="SelectedEmailUser" class="control-label">Debt Partner's Email</label>
                 <input asp-for="SelectedEmailUser" class="form-control" />
                 <span asp-validation-for="SelectedEmailUser" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Ratios[1]" class="control-label">Other User Ratio</label>
+                <label asp-for="Ratios[1]" class="control-label">Debt Partner's Ratio</label>
                 <input asp-for="Ratios[1]" class="form-control" id="ratio1" value="50" min="0" max="100" />
                 <span asp-validation-for="Ratios[1]" class="text-danger"></span>
             </div>

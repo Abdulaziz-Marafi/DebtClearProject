@@ -3,7 +3,7 @@
     ViewData["Title"] = "DebtPayment";
 }
 
-<h1>Pay off Debt</h1>
+<h1>Pay off @Model.DebtName Debt</h1>
 
                     
 
@@ -19,10 +19,10 @@
                 @Model.RemainingDebt
             </td>
         </tr>
-                                    
 
-        <tr>
             <tbody>
+        <tr>
+           
             <td><label asp-for="Amount"></label></td>
             <td>
                 <input asp-for="Amount" placeholder="Enter Amount" class="form-control" min="0.01" max="@Model.RemainingDebt" />
@@ -33,10 +33,15 @@
         <tr>
         <input type="hidden" asp-for="UserDebtId" />
         <input type="hidden" asp-for="RemainingDebt"/>
-		<button type="submit" class="btn btn-primary">Pay</button>
-            </tr>
-		
-     
+        </tr>
+        <div>
+            <button type="submit" class="btn btn-outline-primary">Pay</button>
+            </div>
+        <div>
+				<a asp-action="Index2" asp-controller="Debts" class="btn btn-outline-info">Back to Debts</a>
+				<a asp-action="DebtTransactions" asp-controller="Transactions" asp-route-id="@Model.DebtId"class="btn btn-outline-secondary">Debt Transactions</a>
+        </div>
+
 
      </table>
 
