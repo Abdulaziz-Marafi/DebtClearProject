@@ -24,5 +24,6 @@ namespace DebtClearProject.Models.ViewModels
             Success,
             Failed
         }
+
     }
 }

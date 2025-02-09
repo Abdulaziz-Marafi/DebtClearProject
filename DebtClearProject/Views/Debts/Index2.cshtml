@@ -1,4 +1,4 @@
-﻿ @model IEnumerable<DebtUserDebtsViewModel>
+ @model IEnumerable<DebtUserDebtsViewModel>
 @{
     ViewData["Title"] = "Index2";
 }
@@ -40,6 +40,7 @@
                                     <td>@item.Ratio</td>
                                     <td>@item.StartDate.ToShortDateString()</td>
                                     <td>
+
                                         @if (item.Status == DebtUserDebtsViewModel.DebtStatus.Paid)
                                         {
                                             <span class="badge fs-6 fw-normal bg-tint-success text-success">Paid</span>
@@ -64,9 +65,9 @@
                                             <span class="badge fs-6 fw-normal bg-tint-info text-success">Portion Paid</span>
 
                                         }else {
-											@item.RemainingDebt
+											                      KWD @userDebt.RemainingDebt
 
-										}
+										                    }
                                     
                                     </td>
                                     @* @if (userDebt.IsPaid)
