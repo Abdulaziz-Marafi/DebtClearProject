@@ -3,13 +3,14 @@
     ViewData["Title"] = "DebtPayment";
 }
 
-<h1>Pay off Debt</h1>
+<h1>Pay off @Model.DebtName Debt</h1>
+
+                    
 
 @if(Model.RemainingDebt !=0){
 <form method="post" asp-action="DebtPayment" asp-controller="Debts">
-    <div asp-validation-summary="All" class="text-warning">
-    </div>
-    <table class="table table-bordered">
+
+    <table class="table table-bordered col-5">
         <tr>
             <td>
 			@Html.DisplayNameFor(x => x.RemainingDebt)
@@ -18,18 +19,32 @@
                 @Model.RemainingDebt
             </td>
         </tr>
+
+            <tbody>
         <tr>
+           
             <td><label asp-for="Amount"></label></td>
             <td>
-                    <input asp-for="Amount" placeholder="Enter Amount" class="form-control" min="0" max="@Model.RemainingDebt" />
+                <input asp-for="Amount" placeholder="Enter Amount" class="form-control" min="0.01" max="@Model.RemainingDebt" />
                 <span class="text-danger" asp-validation-for="Amount"></span>
             </td>
+
         </tr>
+        <tr>
         <input type="hidden" asp-for="UserDebtId" />
-		<tr>
-			<td>
-				<button type="submit" class="btn btn-primary">Pay</button>
-			</td>
+        <input type="hidden" asp-for="RemainingDebt"/>
+        </tr>
+        <div>
+            <button type="submit" class="btn btn-outline-primary">Pay</button>
+            </div>
+        <div>
+				<a asp-action="Index2" asp-controller="Debts" class="btn btn-outline-info">Back to Debts</a>
+				<a asp-action="DebtTransactions" asp-controller="Transactions" asp-route-id="@Model.DebtId"class="btn btn-outline-secondary">Debt Transactions</a>
+        </div>
+
+
+     </table>
+
 </form>
 }else {
     <p><span class="alert alert-success"> Your portion of the debt is already paid for.</span></p>
@@ -42,8 +57,8 @@
 
             amountInput.addEventListener('input', function () {
                 var value = parseFloat(this.value);
-                if (value < 0) {
-                    this.value = 0;
+                if (value < 0.01) {
+                    this.value = 0.01;
                 } else if (value > maxAmount) {
                     this.value = maxAmount;
                 }
@@ -54,4 +69,3 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
-

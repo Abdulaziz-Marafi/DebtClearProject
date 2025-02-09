@@ -50,6 +50,7 @@ namespace DebtClearProject.Controllers
                   DebtSplit = debtSplit,
                   StartDate = newDebt.StartDate,
                   EndDate = newDebt.EndDate,
+                  DebtName = newDebt.DebtName,
                   Status = Debt.DebtStatus.Pending
               };
                 db.Debts.Add(debt);
@@ -108,7 +109,7 @@ namespace DebtClearProject.Controllers
                 //}
                 //db.SaveChanges();
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index2));
             }
             else
             {
@@ -122,18 +123,51 @@ namespace DebtClearProject.Controllers
             return View(debts);
         }
 
+        //public async Task<IActionResult> Index2()
+        //{
+        //    var curr = await userManager.GetUserAsync(User);
+        //    //var userdebts = db.UserDebts.Where(x=> x.UserId==curr.Id).ToList();
+        //    //var debts = db.Debts.Where(x=> x.DebtId == userdebts.Select(x => x.DebtId).FirstOrDefault()).ToList();
+        //    var userDebts2 = await db.UserDebts.Where(x => x.UserId == curr.Id).Include(x=>x.Debt).ToListAsync();
+        //    //DebtUserDebtsViewModel userDebtsData = new DebtUserDebtsViewModel()
+        //    //{
+        //    //    Debts = debts,
+        //    //    UserDebts = userdebts
+        //    //};
+        //    return View(userDebts2);
+        //}
+
         public async Task<IActionResult> Index2()
         {
             var curr = await userManager.GetUserAsync(User);
-            //var userdebts = db.UserDebts.Where(x=> x.UserId==curr.Id).ToList();
-            //var debts = db.Debts.Where(x=> x.DebtId == userdebts.Select(x => x.DebtId).FirstOrDefault()).ToList();
-            var userDebts2 = await db.UserDebts.Where(x => x.UserId == curr.Id).Include(x=>x.Debt).ToListAsync();
-            //DebtUserDebtsViewModel userDebtsData = new DebtUserDebtsViewModel()
-            //{
-            //    Debts = debts,
-            //    UserDebts = userdebts
-            //};
-            return View(userDebts2);
+            var userDebts = await db.UserDebts
+                .Where(x => x.UserId == curr.Id)
+                .Include(x => x.Debt)
+                .Include(x => x.User)
+                .ToListAsync();
+
+            var debtUserDebtsViewModels = userDebts.Select(ud => new DebtUserDebtsViewModel
+            {
+                DebtId = ud.DebtId,
+                DebtName = ud.Debt.DebtName,
+                UserDebtsId = ud.UserDebtsId,
+                TotalAmount = ud.Debt.TotalAmount,
+                DebtSplit = ud.Debt.DebtSplit,
+                StartDate = ud.Debt.StartDate,
+                EndDate = ud.Debt.EndDate,
+                IsPaid = ud.IsPaid,
+                Status = (DebtUserDebtsViewModel.DebtStatus)ud.Debt.Status,
+                Ratio = ud.Split,
+                SharedWithName = db.UserDebts
+                    .Where(x => x.DebtId == ud.DebtId && x.UserId != curr.Id)
+                    .Select(x => x.User.FirstName+" "+ x.User.LastName)
+                    .FirstOrDefault()!,
+                RemainingDebt = ud.RemainingDebt,
+                CanPay = ud.Debt.Status == Debt.DebtStatus.Approved && !ud.IsPaid,
+                CanApproveReject = ud.Debt.Status == Debt.DebtStatus.Pending && ud.Status == UserDebts.DebtStatus.Pending
+            }).ToList();
+
+            return View(debtUserDebtsViewModels);
         }
 
         [HttpGet]
@@ -142,11 +176,15 @@ namespace DebtClearProject.Controllers
             var curr = await userManager.GetUserAsync(User);
 
             var userDebt = db.UserDebts.Where(x => x.UserDebtsId == id).FirstOrDefault();
+
+            var debtName = db.Debts.Where(x => x.DebtId == userDebt.DebtId).Select(x => x.DebtName).FirstOrDefault();
             // Add ViewModel
             PayDebtViewModel debt = new PayDebtViewModel()
             {
                 UserDebtId = userDebt.UserDebtsId,
+                DebtId = userDebt.DebtId,
                 RemainingDebt = userDebt.RemainingDebt,
+                DebtName = debtName,
                 Amount = 0.1m
             };
             return View(debt);
@@ -226,8 +264,9 @@ namespace DebtClearProject.Controllers
                     if(userDebt.RemainingDebt == 0)
                     {
                         userDebt.IsPaid = true;
+                        await UpdateDebtStatus(userDebt.DebtId);
                     }
-                    db.SaveChanges();
+                    db.SaveChangesAsync();
                     return RedirectToAction(nameof(Index2));
                 }
             }
@@ -249,7 +288,7 @@ namespace DebtClearProject.Controllers
             await UpdateDebtStatus(userDebt.DebtId);
             return RedirectToAction(nameof(Index2));
         }
-        public async Task<IActionResult> RejecrDebt(Guid? id)
+        public async Task<IActionResult> RejectDebt(Guid? id)
         {
             var curr = await userManager.GetUserAsync(User);
             var userDebt = db.UserDebts.Where(x => x.UserDebtsId == id).FirstOrDefault();
@@ -274,8 +313,12 @@ namespace DebtClearProject.Controllers
             {
                 return;
             }
+            if (userDebts.All(ud => ud.IsPaid == true))
+            {
+                debt.Status = Debt.DebtStatus.Paid;
 
-            if (userDebts.All(ud => ud.Status == UserDebts.DebtStatus.Approved))
+            }
+            else if (userDebts.All(ud => ud.Status == UserDebts.DebtStatus.Approved))
             {
                 debt.Status = Debt.DebtStatus.Approved;
             }

@@ -1,9 +1,8 @@
-﻿@model IEnumerable<UserDebts>
+ @model IEnumerable<DebtUserDebtsViewModel>
 @{
     ViewData["Title"] = "Index2";
 }
 
-<h1>Index2</h1>
 
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 <div class="container">
@@ -12,32 +11,66 @@
             <div class="position-relative card table-nowrap table-card">
                 <div class="card-header align-items-center">
                     <h5 class="mb-0">Debts Table</h5>
-                    <p class="mb-0 small text-muted"> @Model.Count(x=>x.Status == UserDebts.DebtStatus.Pending) Pending Debts</p> 
+                    <p class="mb-0 small text-muted"> @Model.Count(x => x.Status == DebtUserDebtsViewModel.DebtStatus.Pending) Pending Debts</p>
                 </div>
                 <div class="table-responsive">
                     <table class="table mb-0">
                         <thead class="small text-uppercase bg-body text-muted">
                             <tr>
-                                <th>@Html.DisplayNameFor(x => x.FirstOrDefault()!.DebtId)</th>
-                                @* <th>Add date later</th> *@
-                                <th>@Html.DisplayNameFor(x => x.FirstOrDefault()!.Split)</th>
-                                <th>@Html.DisplayNameFor(x => x.FirstOrDefault()!.RemainingDebt)</th>
+                                <th>Debt Name</th>
+                                <th>Total Amount</th>
+                                <th>Debt Split</th>
+                                <th>Your Ratio</th>
+                                <th>Start Date</th>
                                 <th>Status</th>
-                                <th>Operations</th>
+                                <th>Shared With</th>
+                                <th>Remaining Debt</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var userDebt in Model)
+                            @foreach (var item in Model)
                             {
                                 <tr class="align-middle">
-                                    <td>@userDebt.DebtId</td>
-                                    <td>@userDebt.Split.ToString()</td>
+									<td>@item.DebtName</td>
+                                @*  <td>@item.DebtId</td>*@                                 
+                                    <td>@item.TotalAmount</td>
+
+                                    <td>@item.DebtSplit</td>
+                                    <td>@item.Ratio</td>
+                                    <td>@item.StartDate.ToShortDateString()</td>
                                     <td>
-                                        <div class="d-flex align-items-center">
-                                            <span>KWD.@userDebt.RemainingDebt</span>
-                                        </div>
+
+                                        @if (item.Status == DebtUserDebtsViewModel.DebtStatus.Paid)
+                                        {
+                                            <span class="badge fs-6 fw-normal bg-tint-success text-success">Paid</span>
+                                        }
+                                        
+                                        else if(item.Status == DebtUserDebtsViewModel.DebtStatus.Approved)
+                                        {
+                                            <span class="badge fs-6 fw-normal bg-tint-success text-info">Ongoing</span>
+                                        }
+                                        else if (item.Status == DebtUserDebtsViewModel.DebtStatus.Pending)
+                                        {
+                                            <span class="badge fs-6 fw-normal bg-tint-warning text-warning">Pending</span>
+                                        }
+                                        else if (item.Status == DebtUserDebtsViewModel.DebtStatus.Rejected)
+                                        {
+                                            <span class="badge fs-6 fw-normal bg-tint-danger text-danger">Rejected</span>
+                                        }
                                     </td>
-                                    @if (userDebt.IsPaid)
+                                    <td>@item.SharedWithName</td>
+                                    <td>
+                                        @if(item.RemainingDebt == 0){
+                                            <span class="badge fs-6 fw-normal bg-tint-info text-success">Portion Paid</span>
+
+                                        }else {
+											                      KWD @userDebt.RemainingDebt
+
+										                    }
+                                    
+                                    </td>
+                                    @* @if (userDebt.IsPaid)
                                     {
                                         <td>
                                             <span class="badge fs-6 fw-normal bg-tint-success text-success">Paid</span>
@@ -74,15 +107,34 @@
                                             <a asp-action="ApproveDebt" asp-controller="Debts" asp-route-id="@userDebt.UserDebtsId" class="btn btn-outline-primary">Approve</a>
                                             <a asp-action="RejectDebt" asp-controller="Debts" asp-route-id="@userDebt.UserDebtsId" class="btn btn-outline-danger">Reject</a>
                                         </td>
+                                    } *@
+                                    <td>
+                                    @if (item.CanPay)
+                                    {
+                                        <a asp-action="DebtPayment" asp-route-id="@item.UserDebtsId" class="btn btn-outline-primary">Pay</a>
+                                        <a asp-action="DebtTransactions" asp-controller="Transactions" asp-route-id="@item.DebtId" class="btn btn-outline-secondary">Debt Transactions</a>
+                                        }
+                                    @if (item.CanApproveReject)
+                                    {
+                                            <a asp-action="ApproveDebt" asp-controller="Debts" asp-route-id="@item.UserDebtsId" class="btn btn-outline-primary">Approve</a>
+                                            <a asp-action="RejectDebt" asp-controller="Debts" asp-route-id="@item.UserDebtsId" class="btn btn-outline-danger">Reject</a>
+                                       
                                     }
+                                    @if (!item.CanPay && !item.CanApproveReject && item.Status == DebtUserDebtsViewModel.DebtStatus.Pending){
+                                        <span style="font-size:smaller" class="badge alert-warning">Waiting on Partner's Approval</span>
+                                    }
+                                    @if (item.IsPaid){
+                                            <a asp-action="DebtTransactions" asp-controller="Transactions" asp-route-id="@item.DebtId" class="btn btn-outline-secondary">Debt Transactions</a>
+                                    }
+                                    </td>
                                 </tr>
                             }
                         </tbody>
                     </table>
                 </div>
                 <div class="card-footer text-end">
-                    <a asp-action="Index" asp-controller="Transactions" class="btn btn-outline-secondary">View All Transactions</a>
-                    <a asp-action="Create" asp-controller="Debts" class="btn btn-outline-primary">Create Debt</a>
+@*                     <a asp-action="Index" asp-controller="Transactions" class="btn btn-outline-secondary">View All Transactions</a>
+ *@                    <a asp-action="Create" asp-controller="Debts" class="btn btn-outline-primary">Create Debt</a>
                 </div>
             </div>
         </div>

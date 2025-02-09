@@ -1,4 +1,6 @@
-﻿namespace DebtClearProject.Models.ViewModels
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace DebtClearProject.Models.ViewModels
 {
     public class DebtViewModel
     {
@@ -11,6 +13,11 @@
 
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+
+        [Display(Name = "Debt Name")]
+        [Required(ErrorMessage = "Debt Name is Required")]
+        [StringLength(30, MinimumLength = 3, ErrorMessage = "Debt Name Must Be Between 3-30 Characters Long")]
+        public string DebtName { get; set; }
 
         //public DebtStatus Status { get; set; }
 

@@ -5,22 +5,25 @@ namespace DebtClearProject.Models.ViewModels
     public class TransactionViewModel
     {
 
-
-        public Guid TransactionId { get; set; }
-
-        public DateTime Date { get; set; }
-
-        [Required(ErrorMessage = "Please enter the amount")]
         public decimal Amount { get; set; }
+        public TransactionStatus Status { get; set; }
 
-        [Required]
-        [Display(Name = "User ID")]
-        public string UserId { get; set; }
+        [Display(Name =" Transaction Date")]
+        public DateTime TransactionDate { get; set; }
 
-      
+        [Display(Name = " Remaining Balance")]
+        public decimal RemainingBalance { get; set; }
 
-        public string Type { get; set; }
+        public string? SharedDebtorName { get; set; }
 
-        public string? ReceiverId { get; set; }
+        [Display(Name = "Debt Name")]
+        public string? DebtName { get; set; }
+
+        public enum TransactionStatus
+        {
+            Success,
+            Failed
+        }
+
     }
 }
