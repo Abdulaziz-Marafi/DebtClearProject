@@ -3,6 +3,7 @@
     public class Debt
     {
         public Guid DebtId { get; set; }
+        public string? DebtName { get; set; }
 
         public decimal TotalAmount { get; set; }
 
@@ -19,7 +20,8 @@
         {
             Approved,
             Pending,
-            Rejected
+            Rejected,
+            Paid
         }
     }
 }

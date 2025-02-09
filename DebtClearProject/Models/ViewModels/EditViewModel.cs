@@ -24,8 +24,11 @@ namespace DebtClearProject.Models.ViewModels
         public string Email { get; set; }
 
         public decimal Balance { get; set; }
+        [Display(Name = "New Profile Picture")]
+
 
         public IFormFile? NewImg { get; set; }
+        [Display(Name = "Current Profile Picture")]
         public string? Img { get; set; }
         //public string Id { get; internal set; }
     }
