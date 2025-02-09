@@ -1,16 +1,28 @@
-﻿@model PayDebtViewModel
+@model PayDebtViewModel
 @{
     ViewData["Title"] = "DebtPayment";
 }
 
+
 <h1>Pay off @Model.DebtName Debt</h1>
+
 
                     
 
 @if(Model.RemainingDebt !=0){
 <form method="post" asp-action="DebtPayment" asp-controller="Debts">
+    <div asp-validation-summary="All" class="text-warning">
+    </div>
 
-    <table class="table table-bordered col-5">
+
+
+        <div class="col-12 mb-3 mb-lg-5">
+            <div class="position-relative card table-nowrap table-card">
+                <div class="card-header align-items-center">
+                    <h4 class="mb-0"> Pay off Debt</h4>
+
+    <table class="table table-bordered">
+
         <tr>
             <td>
 			@Html.DisplayNameFor(x => x.RemainingDebt)
@@ -43,7 +55,11 @@
         </div>
 
 
-     </table>
+
+            </table>
+            </div>
+            </div>
+            </div>
 
 </form>
 }else {
