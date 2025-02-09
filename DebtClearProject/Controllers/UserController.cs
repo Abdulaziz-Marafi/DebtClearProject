@@ -115,80 +115,80 @@ namespace DebtClearProject.Controllers
             }
             return uniqueFileName;
         }
-        [HttpGet]
-        public async Task<IActionResult> History()
-        {
-            var user = await userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                return RedirectToAction("Login", "Account");
-            }
+        //[HttpGet]
+        //public async Task<IActionResult> History()
+        //{
+        //    var user = await userManager.GetUserAsync(User);
+        //    if (user == null)
+        //    {
+        //        return RedirectToAction("Login", "Account");
+        //    }
 
-            var transactions = await db.Transactions
-                .Where(t => t.UserId == user.Id)
-                .Select(t => new TransactionViewModel
-                {
-                    TransactionId = t.TransactionId,
-                    Date = t.TransactionDate,
-                    Amount = t.Amount,
-                    UserId = t.UserId,
+        //    var transactions = await db.Transactions
+        //        .Where(t => t.UserId == user.Id)
+        //        .Select(t => new TransactionViewModel
+        //        {
+        //            TransactionId = t.TransactionId,
+        //            Date = t.TransactionDate,
+        //            Amount = t.Amount,
+        //            UserId = t.UserId,
                    
-                    Type = "Status"
+        //            Type = "Status"
                     
-                })
-                .ToListAsync();
+        //        })
+        //        .ToListAsync();
 
-            return View(transactions);
-        }
+        //    return View(transactions);
+        //}
 
-        [HttpGet]
-        public async Task<IActionResult> FilterHistory(string filterType)
-        {
-            var user = await userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                return RedirectToAction("Login", "Account");
-            }
+        //[HttpGet]
+        //public async Task<IActionResult> FilterHistory(string filterType)
+        //{
+        //    var user = await userManager.GetUserAsync(User);
+        //    if (user == null)
+        //    {
+        //        return RedirectToAction("Login", "Account");
+        //    }
 
-            var transactions = db.Transactions.AsQueryable();
+        //    var transactions = db.Transactions.AsQueryable();
 
-            var modelAll = await transactions
-                .Select(t => new TransactionViewModel
-                {
-                    TransactionId = t.TransactionId,
-                    Date = t.TransactionDate,
-                    Amount = t.Amount,
-                    UserId = t.UserId,
+        //    var modelAll = await transactions
+        //        .Select(t => new TransactionViewModel
+        //        {
+        //            TransactionId = t.TransactionId,
+        //            Date = t.TransactionDate,
+        //            Amount = t.Amount,
+        //            UserId = t.UserId,
                     
-                    Type= "Status"
+        //            Type= "Status"
                     
-                })
-                .ToListAsync();
-            if (filterType == "All")
-            {
-                View("History", modelAll);
-            }
+        //        })
+        //        .ToListAsync();
+        //    if (filterType == "All")
+        //    {
+        //        View("History", modelAll);
+        //    }
 
-            if (!string.IsNullOrEmpty(filterType) && filterType != "All")
-            {
-                transactions = transactions.Where(t => "Status" == filterType);
-            }
+        //    if (!string.IsNullOrEmpty(filterType) && filterType != "All")
+        //    {
+        //        transactions = transactions.Where(t => "Status" == filterType);
+        //    }
 
-            var model = await transactions
-                .Where(t => t.UserId == user.Id)
-                .Select(t => new TransactionViewModel
-                {
-                    TransactionId = t.TransactionId,
-                    Date = t.TransactionDate,
-                    Amount = t.Amount,
-                    UserId = t.UserId,
-                    Type = "Status"
+        //    var model = await transactions
+        //        .Where(t => t.UserId == user.Id)
+        //        .Select(t => new TransactionViewModel
+        //        {
+        //            TransactionId = t.TransactionId,
+        //            Date = t.TransactionDate,
+        //            Amount = t.Amount,
+        //            UserId = t.UserId,
+        //            Type = "Status"
 
-                })
-                .ToListAsync();
+        //        })
+        //        .ToListAsync();
 
-            return View("History", model);
-        }
+        //    return View("History", model);
+        //}
 
 
     }
